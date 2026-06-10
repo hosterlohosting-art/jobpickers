@@ -1,0 +1,185 @@
+'use client';
+
+import Link from 'next/link';
+import { MapPin, Clock, DollarSign, Bookmark, ArrowUpRight, Star } from 'lucide-react';
+import { useState } from 'react';
+import CompanyLogo from './company-logo';
+
+// Shared relative date formatter
+export function getRelativeTime(dateString: string | Date): string {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  
+  const diffMins = Math.floor(diffMs / (1000 * 60));
+  if (diffMins < 60) return `${diffMins}m ago`;
+  
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  if (diffHours < 24) return `${diffHours}h ago`;
+  
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  if (diffDays === 1) return 'Yesterday';
+  if (diffDays < 30) return `${diffDays} days ago`;
+  
+  return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
+
+interface JobCardProps {
+  job: {
+    id: string;
+    title: string;
+    slug: string;
+    location: string;
+    salaryMin?: number | null;
+    salaryMax?: number | null;
+    remoteType: string;
+    employmentType: string;
+    category: string;
+    sourceName: string;
+    postedAt: string | Date;
+    featured?: boolean;
+    company: {
+      name: string;
+      logo?: string | null;
+      slug: string;
+    };
+  };
+  isSaved?: boolean;
+  onSaveToggle?: (jobId: string) => void;
+  onApplyClick?: (jobId: string) => void;
+}
+
+export default function JobCard({ job, isSaved = false, onSaveToggle, onApplyClick }: JobCardProps) {
+  const [saved, setSaved] = useState(isSaved);
+
+  const handleSave = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Optimistic UI update
+    const previousSaved = saved;
+    setSaved(!previousSaved);
+
+    try {
+      const res = await fetch('/api/jobs/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jobId: job.id })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setSaved(data.saved);
+        if (onSaveToggle) onSaveToggle(job.id);
+      } else {
+        setSaved(previousSaved);
+      }
+    } catch (err) {
+      console.error('Failed to save bookmark:', err);
+      setSaved(previousSaved);
+    }
+  };
+
+  const handleApply = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onApplyClick) onApplyClick(job.id);
+  };
+
+  const getCompanyInitial = () => job.company.name.charAt(0).toUpperCase();
+
+  // Glassdoor mock rating derived from company name hash for visual consistency
+  const getMockRating = () => {
+    let hash = 0;
+    for (let i = 0; i < job.company.name.length; i++) {
+      hash = job.company.name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return (3.5 + (Math.abs(hash) % 15) / 10).toFixed(1);
+  };
+
+  return (
+    <div className={`bg-white border rounded-lg p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
+      job.featured ? 'border-accent-green/50 bg-accent-green/[0.02]' : 'border-grayBorder hover:border-accent-green/30'
+    }`}>
+      <div className="flex gap-4">
+        
+        {/* Left: Company Logo / Initials */}
+        <Link href={`/companies/${job.company.slug}`} className="flex-shrink-0">
+          <CompanyLogo logo={job.company.logo} name={job.company.name} className="w-12 h-12" textClassName="text-lg" />
+        </Link>
+
+        {/* Center: Details */}
+        <div className="flex-grow min-w-0">
+          <div className="flex items-start justify-between gap-4">
+            
+            {/* Title & Company Name */}
+            <div>
+              <Link href={`/jobs/${job.slug}`}>
+                <h3 className="font-bold text-slateText-primary text-base hover:text-accent-green transition-colors hover:underline leading-tight truncate">
+                  {job.title}
+                </h3>
+              </Link>
+              <div className="flex items-center gap-2 mt-1">
+                <Link href={`/companies/${job.company.slug}`} className="text-sm font-semibold text-slateText-secondary hover:text-accent-teal hover:underline">
+                  {job.company.name}
+                </Link>
+                
+                {/* Glassdoor Star rating */}
+                <div className="flex items-center gap-0.5 text-xs text-amber-500 font-bold bg-amber-500/10 px-1.5 py-0.5 rounded">
+                  <Star className="w-3 h-3 fill-amber-500" />
+                  <span>{getMockRating()}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Bookmark button */}
+            <button
+              onClick={handleSave}
+              className={`p-1.5 rounded-full border transition-colors ${
+                saved 
+                  ? 'border-accent-green/30 bg-accent-green/10 text-accent-green' 
+                  : 'border-grayBorder text-slateText-muted hover:text-slateText-primary hover:bg-grayBg'
+              }`}
+              aria-label={saved ? 'Unsave Job' : 'Save Job'}
+            >
+              <Bookmark className={`w-4 h-4 ${saved ? 'fill-accent-green' : ''}`} />
+            </button>
+          </div>
+
+          {/* Location & Tags row */}
+          <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs font-semibold text-slateText-secondary mt-3">
+            <span className="flex items-center gap-1.5 text-slateText-primary">
+              <MapPin className="w-3.5 h-3.5 text-slateText-muted" />
+              {job.location}
+            </span>
+            <span className="flex items-center gap-1 text-slateText-muted uppercase tracking-wider text-[10px]">
+              {job.remoteType}
+            </span>
+            <span className="flex items-center gap-1 text-slateText-muted uppercase tracking-wider text-[10px]">
+              {job.employmentType.replace('-', ' ')}
+            </span>
+            {job.salaryMin && job.salaryMin > 0 && (
+              <span className="text-accent-green flex items-center font-bold">
+                <DollarSign className="w-3.5 h-3.5" />
+                {Math.round(job.salaryMin / 1000)}k - {Math.round((job.salaryMax || job.salaryMin) / 1000)}k
+              </span>
+            )}
+          </div>
+
+          {/* Card Footer: Timestamp & Apply redirect */}
+          <div className="border-t border-grayBorder/60 mt-4 pt-3 flex items-center justify-between gap-4 text-xs text-slateText-muted">
+            <span>
+              Posted {getRelativeTime(job.postedAt)} &bull; Source: <span className="font-semibold text-slateText-secondary">{job.sourceName}</span>
+            </span>
+            <button
+              onClick={handleApply}
+              className="flex items-center gap-1 font-bold text-accent-green hover:text-accent-greenHover group transition-colors"
+            >
+              <span>Apply</span>
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-grayBg text-slateText-primary font-sans antialiased min-h-screen flex flex-col;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Custom Scrollbar Styles matching Glassdoor layout */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-grayBg;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slateText-muted/30 rounded-md;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slateText-muted/50;
+}
+
+/* Glassdoor-style clean rounded card overrides */
+.card-hover-effect {
+  @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-accent-green/30;
+}

@@ -1,0 +1,179 @@
+datasource db {
+  provider = "sqlite" // Set to "postgresql" in production
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 1. User accounts (Admin, Employer, Job Seeker)
+model User {
+  id           String        @id @default(uuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  role         String        // "admin", "employer", "user"
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  
+  // Relations
+  savedJobs    SavedJob[]
+  applications ApplicationTracking[]
+  blogPosts    BlogPost[]
+}
+
+// 2. Company Profile
+model Company {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  logo        String?  // Logo URL or empty
+  website     String?
+  industry    String?
+  size        String?  // e.g. "1-10", "11-50", "500+"
+  location    String?
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  jobs        Job[]
+}
+
+// 3. Job Posting (Life-cycle managed)
+model Job {
+  id               String   @id @default(uuid())
+  title            String
+  slug             String   @unique
+  companyId        String
+  company          Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  description      String   // Normalized HTML content
+  requirements     String?  // Stringified list
+  benefits         String?  // Stringified list
+  salaryMin        Int?     // USD annual minimum
+  salaryMax        Int?     // USD annual maximum
+  salaryCurrency   String   @default("USD")
+  location         String
+  country          String   @default("US")
+  city             String?
+  remoteType       String   // "remote", "hybrid", "onsite"
+  employmentType   String   // "full-time", "part-time", "contract", "internship"
+  experienceLevel  String   // "entry", "mid", "senior", "lead"
+  category         String   // "Software", "Marketing", "Finance", "Sales", "Customer Support", "Design", "Data", "HR"
+  skills           String   // Comma separated values
+  
+  // Sourcing & Tracking
+  sourceName       String   // "Indeed", "LinkedIn", "Glassdoor", "Arbeitnow", "RSS", "Employer"
+  sourceJobId      String?  
+  sourceUrl        String?  // Original URL
+  applyUrl         String   // Direct application link
+  status           String   @default("published") // "draft", "published", "expired", "archived", "rejected"
+  applyClicks      Int      @default(0)
+  
+  featured         Boolean  @default(false)
+
+  // Dates
+  postedAt         DateTime @default(now())
+  expiresAt        DateTime
+  sourceLastSeenAt DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  savedBy          SavedJob[]
+  applications     ApplicationTracking[]
+
+  // Indexing Optimization
+  @@index([category])
+  @@index([status])
+  @@index([remoteType])
+  @@index([featured])
+}
+
+// 4. Ingestion connector configuration
+model JobSource {
+  id                String      @id @default(uuid())
+  name              String      @unique // Indeed, LinkedIn, RSS
+  type              String      // "api", "rss", "manual"
+  apiBaseUrl        String?
+  apiKeyEncrypted   String?
+  isActive          Boolean     @default(true)
+  dailyLimit        Int         @default(100)
+  syncFrequency     String      @default("daily") // hourly, daily
+  lastSyncedAt      DateTime?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  
+  // Relation
+  logs              ImportLog[]
+}
+
+// 5. Daily Sync Audits & Performance tracking
+model ImportLog {
+  id             String    @id @default(uuid())
+  sourceId       String
+  source         JobSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  status         String    // "success", "failed"
+  fetchedCount   Int       @default(0)
+  importedCount  Int       @default(0)
+  duplicateCount Int       @default(0)
+  rejectedCount  Int       @default(0)
+  errorMessage   String?
+  startedAt      DateTime  @default(now())
+  finishedAt     DateTime?
+}
+
+// 6. Job seeker bookmarks
+model SavedJob {
+  id        String   @id @default(uuid())
+  userId    String
+  jobId     String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+// 7. Internal applications tracking
+model ApplicationTracking {
+  id        String   @id @default(uuid())
+  userId    String
+  jobId     String
+  status    String   @default("applied") // "applied", "interviewing", "offered", "rejected"
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job       Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+// 8. Career advice content model
+model BlogPost {
+  id              String   @id @default(uuid())
+  title           String
+  slug            String   @unique
+  excerpt         String
+  content         String
+  featuredImage   String?
+  authorId        String
+  author          User     @relation(fields: [authorId], references: [id])
+  status          String   @default("published") // draft, published
+  metaTitle       String?
+  metaDescription String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+// 9. AdSense Code Manager
+model AdPlacement {
+  id        String   @id @default(uuid())
+  name      String   @unique // "homepage_top", "job_sidebar", etc.
+  page      String
+  position  String
+  adCode    String   // Dynamic raw AdSense script strings
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

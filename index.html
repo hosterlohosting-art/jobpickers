@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>JobPickers | Find Your Dream Job - Global Job Board</title>
+  <meta name="description" content="Explore thousands of job opportunities worldwide. Fetching active listings from top remote and tech platforms. Resume builder, global search, and instant applications.">
+  <meta name="keywords" content="job search, remote jobs, tech jobs, hire developers, find work, careers, resume builder, job board">
+  <meta name="author" content="JobPickers">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jobpickers.com/">
+  <meta property="og:title" content="JobPickers | Find Your Dream Job - Global Job Board">
+  <meta property="og:description" content="Explore thousands of job opportunities worldwide. Fetching active listings from top remote and tech platforms.">
+  <meta property="og:image" content="https://jobpickers.com/assets/og-image.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://jobpickers.com/">
+  <meta property="twitter:title" content="JobPickers | Find Your Dream Job - Global Job Board">
+  <meta property="twitter:description" content="Explore thousands of job opportunities worldwide. Fetching active listings from top remote and tech platforms.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons for Premium Aesthetics -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <link rel="stylesheet" href="./styles.css">
+  
+  <!-- Dynamic JSON-LD Structured Data for Google Jobs -->
+  <script type="application/ld+json" id="google-job-schema"></script>
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#" class="logo-area" id="logo-btn">
+        <div class="logo-icon">
+          <i class="fa-solid fa-briefcase"></i>
+        </div>
+        <span class="logo-text">Job<span class="highlight">Pickers</span></span>
+      </a>
+      
+      <nav class="nav-links">
+        <a href="#" class="nav-link active" id="nav-find-jobs" data-view="jobs-view">
+          <i class="fa-solid fa-magnifying-glass"></i> Find Jobs
+        </a>
+        <a href="#" class="nav-link" id="nav-resume-builder" data-view="resume-view">
+          <i class="fa-solid fa-file-invoice"></i> Resume Builder
+        </a>
+        <a href="#" class="nav-link" id="nav-post-job" data-view="post-view">
+          <i class="fa-solid fa-circle-plus"></i> Post a Job
+        </a>
+        <a href="#" class="nav-link" id="nav-bookmarks" data-view="bookmarks-view">
+          <i class="fa-solid fa-bookmark"></i> Saved (<span id="bookmark-count">0</span>)
+        </a>
+      </nav>
+      
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="theme-toggle" aria-label="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <a href="#" class="btn btn-primary btn-sm mobile-hide" id="post-job-cta">Post a Job</a>
+      </div>
+      
+      <!-- Mobile Navigation Hamburger -->
+      <button class="mobile-nav-toggle" id="mobile-menu-btn" aria-label="Toggle Navigation Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Dropdown Navigation Menu -->
+  <div class="mobile-nav-menu" id="mobile-nav-menu">
+    <a href="#" class="mobile-nav-link active" data-view="jobs-view"><i class="fa-solid fa-magnifying-glass"></i> Find Jobs</a>
+    <a href="#" class="mobile-nav-link" data-view="resume-view"><i class="fa-solid fa-file-invoice"></i> Resume Builder</a>
+    <a href="#" class="mobile-nav-link" data-view="post-view"><i class="fa-solid fa-circle-plus"></i> Post a Job</a>
+    <a href="#" class="mobile-nav-link" data-view="bookmarks-view"><i class="fa-solid fa-bookmark"></i> Saved Jobs (<span class="bookmark-count-mobile">0</span>)</a>
+    <button class="btn btn-secondary mobile-theme-btn" id="mobile-theme-btn">
+      <i class="fa-solid fa-moon"></i> <span>Dark Mode</span>
+    </button>
+  </div>
+
+  <!-- Main View Wrapper -->
+  <main class="main-layout">
+    
+    <!-- Top AdSense Banner (Leaderboard format) -->
+    <div class="adsense-slot ads-leaderboard" id="adsense-top">
+      <div class="adsense-label">Sponsored Advertisement</div>
+      <div class="adsense-mock-content">
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-1234567890123456"
+             data-ad-slot="1111111111"></ins>
+        <div class="mock-ad-graphic">
+          <i class="fa-solid fa-rectangle-ad"></i>
+          <div>Get 50% off professional cloud hosting on DigitalOcean. Click here to learn more.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 1: JOB BOARD VIEW (Default) -->
+    <section id="jobs-view" class="app-view active">
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <div class="hero-content">
+          <h1>Find Your Dream Job <span class="gradient-text">Automatically</span></h1>
+          <p class="hero-subtitle">Aggregating thousands of verified developer, remote, design, and marketing positions worldwide.</p>
+          
+          <!-- Unified Search Bar -->
+          <div class="search-bar-container">
+            <form id="hero-search-form" class="search-form">
+              <div class="search-input-group">
+                <i class="fa-solid fa-briefcase input-icon"></i>
+                <input type="text" id="search-keyword" placeholder="Job title, keywords, or company...">
+              </div>
+              <div class="search-input-group divider-left">
+                <i class="fa-solid fa-location-dot input-icon"></i>
+                <input type="text" id="search-location" placeholder="City, country, or 'Remote'...">
+              </div>
+              <button type="submit" class="btn btn-primary search-btn">
+                <i class="fa-solid fa-magnifying-glass"></i> <span class="btn-text">Search Jobs</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Quick Statistics -->
+          <div class="hero-stats">
+            <div class="stat-item">
+              <span class="stat-number" id="stat-jobs">14,240</span>
+              <span class="stat-label">Active Jobs</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" id="stat-companies">2,150</span>
+              <span class="stat-label">Companies</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" id="stat-countries">85+</span>
+              <span class="stat-label">Countries</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Board Split Layout -->
+      <div class="board-layout">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar-filters">
+          <div class="filter-header">
+            <h3><i class="fa-solid fa-sliders"></i> Filters</h3>
+            <button id="clear-filters-btn" class="clear-btn">Clear All</button>
+          </div>
+          
+          <div class="filter-group">
+            <label for="filter-category" class="filter-label">Category</label>
+            <select id="filter-category" class="filter-select">
+              <option value="">All Categories</option>
+              <option value="software-development">Software Development</option>
+              <option value="design">Design & Creative</option>
+              <option value="marketing">Marketing & Sales</option>
+              <option value="customer-support">Customer Support</option>
+              <option value="product">Product & Project Management</option>
+              <option value="finance-legal">Finance & Legal</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <span class="filter-label">Job Type</span>
+            <div class="checkbox-list">
+              <label class="checkbox-container">
+                <input type="checkbox" id="type-full-time" value="full-time" checked>
+                <span class="checkmark"></span> Full-Time
+              </label>
+              <label class="checkbox-container">
+                <input type="checkbox" id="type-part-time" value="part-time">
+                <span class="checkmark"></span> Part-Time
+              </label>
+              <label class="checkbox-container">
+                <input type="checkbox" id="type-contract" value="contract">
+                <span class="checkmark"></span> Contract
+              </label>
+              <label class="checkbox-container">
+                <input type="checkbox" id="type-internship" value="internship">
+                <span class="checkmark"></span> Internship
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <span class="filter-label">Workplace Policy</span>
+            <div class="checkbox-list">
+              <label class="checkbox-container">
+                <input type="checkbox" id="policy-remote" value="remote" checked>
+                <span class="checkmark"></span> Remote Only
+              </label>
+              <label class="checkbox-container">
+                <input type="checkbox" id="policy-hybrid" value="hybrid">
+                <span class="checkmark"></span> Hybrid
+              </label>
+              <label class="checkbox-container">
+                <input type="checkbox" id="policy-onsite" value="onsite">
+                <span class="checkmark"></span> On-Site
+              </label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-salary" class="filter-label">Min. Salary (USD/yr)</label>
+            <div class="salary-slider-container">
+              <input type="range" id="filter-salary" min="0" max="200000" step="10000" value="0" class="salary-range">
+              <div class="salary-values">
+                <span>Any</span>
+                <span id="salary-display">$0</span>
+                <span>$200k+</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sticky Sidebar AdSense Placement -->
+          <div class="adsense-slot ads-sidebar" id="adsense-sidebar">
+            <div class="adsense-label">Sponsored</div>
+            <div class="adsense-mock-content">
+              <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-client="ca-pub-1234567890123456"
+                   data-ad-slot="2222222222"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+              <div class="mock-ad-graphic vertical">
+                <i class="fa-solid fa-star-of-life"></i>
+                <h5>Build Your Resume Faster</h5>
+                <p>Use our resume builder to generate a professional PDF resume in 2 minutes.</p>
+                <button class="btn btn-secondary btn-sm" id="ad-resume-cta">Try It Free</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Feed (List + Detail Pane) -->
+        <div class="feed-container">
+          <!-- Job List Column (Left) -->
+          <div class="job-list-panel">
+            <div class="panel-header">
+              <h2>All Job Listings (<span id="job-results-count">0</span>)</h2>
+              <div class="sort-selector">
+                <label for="sort-jobs">Sort By:</label>
+                <select id="sort-jobs">
+                  <option value="newest">Newest</option>
+                  <option value="salary-desc">Highest Salary</option>
+                  <option value="company">Company Name</option>
+                </select>
+              </div>
+            </div>
+            
+            <div id="job-cards-container" class="job-cards-container">
+              <!-- Dynamically rendered job cards will go here -->
+              <div class="loading-state">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                <p>Loading jobs from global boards...</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Job Detail Column (Right) -->
+          <div class="job-detail-panel" id="job-detail-panel">
+            <div class="detail-placeholder">
+              <i class="fa-solid fa-briefcase"></i>
+              <h3>Select a Job</h3>
+              <p>Click on any job card to view the description, salary analysis, company background, and apply directly.</p>
+            </div>
+            <!-- Dynamically rendered details will load here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: RESUME BUILDER VIEW -->
+    <section id="resume-view" class="app-view">
+      <div class="form-page-container">
+        <div class="form-header">
+          <h2><i class="fa-solid fa-file-invoice"></i> Interactive Resume Builder</h2>
+          <p>Create a beautiful, modern ATS-friendly PDF resume in under two minutes.</p>
+        </div>
+        
+        <div class="resume-workspace">
+          <!-- Resume Input Form (Left) -->
+          <div class="resume-form-panel">
+            <form id="resume-builder-form">
+              <div class="form-section">
+                <h4><i class="fa-solid fa-user"></i> Personal Details</h4>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label for="res-fullname">Full Name</label>
+                    <input type="text" id="res-fullname" placeholder="John Doe" required>
+                  </div>
+                  <div class="form-field">
+                    <label for="res-title">Professional Title</label>
+                    <input type="text" id="res-title" placeholder="Lead Software Engineer" required>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label for="res-email">Email Address</label>
+                    <input type="email" id="res-email" placeholder="john@example.com" required>
+                  </div>
+                  <div class="form-field">
+                    <label for="res-phone">Phone Number</label>
+                    <input type="text" id="res-phone" placeholder="+1 (555) 123-4567">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-field">
+                    <label for="res-website">Website / LinkedIn</label>
+                    <input type="url" id="res-website" placeholder="https://linkedin.com/in/johndoe">
+                  </div>
+                </div>
+                <div class="form-field">
+                  <label for="res-summary">Professional Summary</label>
+                  <textarea id="res-summary" rows="3" placeholder="Dedicated software development expert with 5+ years of experience specializing in frontend web design and full-stack solutions..."></textarea>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4><i class="fa-solid fa-briefcase"></i> Work Experience</h4>
+                <div id="experience-list">
+                  <div class="experience-item card-sub">
+                    <div class="form-row">
+                      <div class="form-field">
+                        <label>Company</label>
+                        <input type="text" class="exp-company" placeholder="Acme Tech" required>
+                      </div>
+                      <div class="form-field">
+                        <label>Role</label>
+                        <input type="text" class="exp-role" placeholder="Senior Frontend Developer" required>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-field">
+                        <label>Duration</label>
+                        <input type="text" class="exp-duration" placeholder="Jan 2022 - Present" required>
+                      </div>
+                    </div>
+                    <div class="form-field">
+                      <label>Responsibilities & Achievements</label>
+                      <textarea class="exp-details" rows="2" placeholder="Led developer squads, restructured system architecture to optimize load speed by 40%..."></textarea>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" id="add-exp-btn"><i class="fa-solid fa-plus"></i> Add Job</button>
+              </div>
+
+              <div class="form-section">
+                <h4><i class="fa-solid fa-graduation-cap"></i> Education</h4>
+                <div id="education-list">
+                  <div class="education-item card-sub">
+                    <div class="form-row">
+                      <div class="form-field">
+                        <label>School / University</label>
+                        <input type="text" class="edu-school" placeholder="Stanford University" required>
+                      </div>
+                      <div class="form-field">
+                        <label>Degree</label>
+                        <input type="text" class="edu-degree" placeholder="B.S. in Computer Science" required>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="form-field">
+                        <label>Year</label>
+                        <input type="text" class="edu-year" placeholder="2018 - 2021" required>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" id="add-edu-btn"><i class="fa-solid fa-plus"></i> Add Education</button>
+              </div>
+
+              <div class="form-section">
+                <h4><i class="fa-solid fa-brain"></i> Skills (Comma Separated)</h4>
+                <div class="form-field">
+                  <input type="text" id="res-skills" placeholder="JavaScript, React, CSS, Node.js, Web Design, Git" required>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Resume Preview Panel (Right) -->
+          <div class="resume-preview-panel">
+            <div class="preview-header-actions">
+              <span>Live Preview</span>
+              <button class="btn btn-primary btn-sm" id="download-resume-btn"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
+            </div>
+            
+            <!-- Styled Resume Document -->
+            <div class="resume-document" id="resume-document-capture">
+              <div class="doc-header">
+                <h2 id="doc-name">John Doe</h2>
+                <h3 id="doc-title">Lead Software Engineer</h3>
+                <div class="doc-meta">
+                  <span id="doc-email"><i class="fa-solid fa-envelope"></i> john@example.com</span>
+                  <span id="doc-phone"><i class="fa-solid fa-phone"></i> +1 (555) 123-4567</span>
+                  <span id="doc-website"><i class="fa-solid fa-globe"></i> linkedin.com/in/johndoe</span>
+                </div>
+              </div>
+              
+              <div class="doc-body">
+                <div class="doc-section">
+                  <h4 class="doc-section-title">Professional Summary</h4>
+                  <p id="doc-summary" class="doc-text">Dedicated software development expert with 5+ years of experience specializing in frontend web design and full-stack solutions...</p>
+                </div>
+
+                <div class="doc-section">
+                  <h4 class="doc-section-title">Work Experience</h4>
+                  <div id="doc-experience-container">
+                    <!-- Experience items loaded dynamically -->
+                  </div>
+                </div>
+
+                <div class="doc-section">
+                  <h4 class="doc-section-title">Education</h4>
+                  <div id="doc-education-container">
+                    <!-- Education items loaded dynamically -->
+                  </div>
+                </div>
+
+                <div class="doc-section">
+                  <h4 class="doc-section-title">Skills</h4>
+                  <div class="doc-skills-list" id="doc-skills-container">
+                    <!-- Skills loading -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: EMPLOYER PORTAL VIEW -->
+    <section id="post-view" class="app-view">
+      <div class="form-page-container max-w-md">
+        <div class="form-header">
+          <h2><i class="fa-solid fa-bullhorn"></i> Post a Job Listing</h2>
+          <p>Put your job details in front of thousands of high-quality professionals. Jobs are automatically featured on our board.</p>
+        </div>
+
+        <form id="post-job-form" class="card-main">
+          <div class="form-section">
+            <h4>1. Company Details</h4>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="post-company">Company Name</label>
+                <input type="text" id="post-company" placeholder="e.g. Acme Tech" required>
+              </div>
+              <div class="form-field">
+                <label for="post-logo">Logo URL</label>
+                <input type="url" id="post-logo" placeholder="https://example.com/logo.png">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="post-comp-site">Website Link</label>
+                <input type="url" id="post-comp-site" placeholder="https://acme.tech">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h4>2. Job Details</h4>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="post-title">Job Title</label>
+                <input type="text" id="post-title" placeholder="e.g. Staff Fullstack Engineer" required>
+              </div>
+              <div class="form-field">
+                <label for="post-category">Category</label>
+                <select id="post-category" required>
+                  <option value="software-development">Software Development</option>
+                  <option value="design">Design & Creative</option>
+                  <option value="marketing">Marketing & Sales</option>
+                  <option value="customer-support">Customer Support</option>
+                  <option value="product">Product & Project Management</option>
+                  <option value="finance-legal">Finance & Legal</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="post-type">Job Type</label>
+                <select id="post-type" required>
+                  <option value="full-time">Full-Time</option>
+                  <option value="part-time">Part-Time</option>
+                  <option value="contract">Contract</option>
+                  <option value="internship">Internship</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="post-policy">Workplace Policy</label>
+                <select id="post-policy" required>
+                  <option value="remote">Remote Only</option>
+                  <option value="hybrid">Hybrid</option>
+                  <option value="onsite">On-Site</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="post-location">Location</label>
+                <input type="text" id="post-location" placeholder="e.g. Chicago, IL or 'Remote'" required>
+              </div>
+              <div class="form-field">
+                <label for="post-salary">Estimated Annual Salary (USD)</label>
+                <input type="number" id="post-salary" placeholder="e.g. 120000" min="0">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="post-description">Detailed Job Description</label>
+              <textarea id="post-description" rows="6" placeholder="Enter roles, duties, expectations, skills needed, benefits..." required></textarea>
+            </div>
+            
+            <div class="form-field">
+              <label for="post-apply">Application Link / Email</label>
+              <input type="text" id="post-apply" placeholder="e.g. https://careers.acme.tech/job1 or jobs@acme.tech" required>
+            </div>
+          </div>
+
+          <!-- Custom Monetization Simulation (Paid Posting Option) -->
+          <div class="monetization-box card-sub">
+            <h5><i class="fa-solid fa-rocket"></i> Listing Packages</h5>
+            <div class="pricing-options">
+              <label class="pricing-card active">
+                <input type="radio" name="listing-tier" value="free" checked>
+                <div class="tier-details">
+                  <span class="tier-name">Free Tier</span>
+                  <span class="tier-price">$0</span>
+                  <span class="tier-desc">Standard job board listing for 30 days.</span>
+                </div>
+              </label>
+              <label class="pricing-card">
+                <input type="radio" name="listing-tier" value="premium">
+                <div class="tier-details">
+                  <span class="tier-name">Premium Highlight</span>
+                  <span class="tier-price">$99</span>
+                  <span class="tier-desc">Featured banner at top of feed, company branding, and double distribution.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full" id="submit-job-btn">Publish Job Listing</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- VIEW 4: BOOKMARKS VIEW -->
+    <section id="bookmarks-view" class="app-view">
+      <div class="form-page-container">
+        <div class="form-header">
+          <h2><i class="fa-solid fa-bookmark"></i> Your Bookmarked Jobs</h2>
+          <p>View and manage all jobs you have saved for later. Keep track of your job search progress here.</p>
+        </div>
+        
+        <div class="bookmarks-layout">
+          <!-- Saved Jobs List -->
+          <div class="bookmarks-list-panel">
+            <div id="bookmark-cards-container" class="job-cards-container">
+              <!-- Bookmarked job cards go here -->
+              <div class="detail-placeholder">
+                <i class="fa-solid fa-bookmark"></i>
+                <h3>No Bookmarked Jobs</h3>
+                <p>Bookmark jobs from the main feed using the icon on any listing card to see them here.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Bookmarks detail side panel -->
+          <div class="bookmarks-detail-panel" id="bookmark-detail-panel">
+            <div class="detail-placeholder">
+              <i class="fa-solid fa-circle-info"></i>
+              <h3>Select a Saved Job</h3>
+              <p>Click on any job in your saved list to display details and apply.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom AdSense Banner -->
+    <div class="adsense-slot ads-leaderboard" id="adsense-bottom-slot">
+      <div class="adsense-label">Sponsored Advertisement</div>
+      <div class="adsense-mock-content">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-format="autorelaxed"
+             data-ad-client="ca-pub-1234567890123456"
+             data-ad-slot="3333333333"></ins>
+        <div class="mock-ad-graphic">
+          <i class="fa-solid fa-rectangle-ad"></i>
+          <div>Hire premium developers worldwide. Post your job on JobPickers from $99/mo.</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Sticky Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="logo-area">
+          <div class="logo-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <span class="logo-text">Job<span class="highlight">Pickers</span></span>
+        </div>
+        <p>Your premium global career directory, harvesting premium developer, design, and product jobs automatically from top sources.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-links-group">
+        <div class="footer-col">
+          <h5>Navigate</h5>
+          <a href="#" data-target="jobs-view">Find Jobs</a>
+          <a href="#" data-target="resume-view">Resume Builder</a>
+          <a href="#" data-target="post-view">Post a Job</a>
+          <a href="#" data-target="bookmarks-view">Bookmarks</a>
+        </div>
+        
+        <div class="footer-col">
+          <h5>Legal</h5>
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookie settings</a>
+          <a href="#">Ad Choices</a>
+        </div>
+
+        <div class="footer-col flex-grow">
+          <h5>Newsletter</h5>
+          <p>Get a weekly digest of premium remote developer jobs delivered straight to your inbox.</p>
+          <form id="footer-subscribe-form" class="subscribe-form">
+            <input type="email" placeholder="name@domain.com" required>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
+          </form>
+          <div id="subscribe-success-msg" class="success-alert-sub hidden">
+            <i class="fa-solid fa-circle-check"></i> Subscribed successfully!
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-copyright">
+      <div>&copy; 2026 JobPickers. All rights reserved. Optimized for Google Jobs & AdSense monetized.</div>
+      <div>Designed with <i class="fa-solid fa-heart" style="color: #6366f1;"></i> by JobPickers Tech</div>
+    </div>
+  </footer>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

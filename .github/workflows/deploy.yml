@@ -1,0 +1,53 @@
+name: Build and Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main # Trigger deployment when pushing to the main branch
+
+jobs:
+  deploy:
+    name: Build & Sync
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Next.js Application
+        run: npm run build
+        env:
+          # (Optional) Inject production build variables here if needed
+          NEXT_PUBLIC_SITE_URL: 'https://yourdomain.com'
+
+      - name: Sync Files to cPanel via SFTP/FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.CPANEL_FTP_HOST }}
+          username: ${{ secrets.CPANEL_FTP_USER }}
+          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
+          port: 21 # Change to 22 if using SFTP (recommended)
+          
+          # Deploy to your specific cPanel application directory
+          server-dir: /public_html/
+          
+          # Crucial exclusions: Prevent overwriting SQLite database and local config secrets
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .env
+            prisma/dev.db
+            prisma/dev.db-journal
+            README.md
+            sync_jobs.bat
+            generate_qr.py
