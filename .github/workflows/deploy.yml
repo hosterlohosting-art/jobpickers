@@ -32,6 +32,11 @@ jobs:
           # (Optional) Inject production build variables here if needed
           NEXT_PUBLIC_SITE_URL: 'https://yourdomain.com'
 
+      - name: Create Restart Trigger
+        run: |
+          mkdir -p tmp
+          echo $(date) > tmp/restart.txt
+
       - name: Sync Files to cPanel via SFTP/FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:

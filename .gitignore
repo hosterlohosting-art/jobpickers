@@ -29,3 +29,7 @@ prisma/dev.db-journal
 # Operating System files
 .DS_Store
 Thumbs.db
+
+# Temporary Passenger restart files
+tmp/
+
