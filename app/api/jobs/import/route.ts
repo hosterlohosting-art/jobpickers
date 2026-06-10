@@ -5,6 +5,7 @@ import { LinkedInConnector } from '../../../../lib/connectors/linkedin';
 import { GlassdoorConnector } from '../../../../lib/connectors/glassdoor';
 import { RSSFeedConnector } from '../../../../lib/connectors/rss';
 import { ManualConnector } from '../../../../lib/connectors/manual';
+import { notifyGoogleIndexing } from '../../../../lib/google-indexing';
 
 function getConnector(name: string) {
   switch (name) {
@@ -243,6 +244,10 @@ async function handleImport(sourceId: string | null) {
               expiresAt: normalized.expiresAt
             }
           });
+
+          // Notify Google Indexing API of newly imported job
+          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://jobpickers.com';
+          notifyGoogleIndexing(`${siteUrl}/jobs/${normalized.slug}`).catch(e => console.error('[Google Indexing Crawler Ping Failed]', e));
 
           importedCount++;
           globalImported++;

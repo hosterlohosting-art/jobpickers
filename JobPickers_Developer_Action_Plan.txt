@@ -1,0 +1,1092 @@
+============================================================
+   JOBPICKERS.COM - FULL AUDIT & 30-DAY DEVELOPER ACTION PLAN
+   Prepared: June 11, 2026
+   Status: CRITICAL - Site is not ready for users, AdSense, or Google Jobs
+============================================================
+
+TABLE OF CONTENTS
+-----------------
+1. Executive Summary & Final Verdict
+2. Critical Issues Found (Security + Data)
+3. Technical SEO Audit
+4. Google Jobs Schema Audit
+5. AdSense Readiness Audit
+6. Product / UX Audit
+7. Content & Trust Signals Audit
+8. Data Ingestion Architecture
+9. 30-Day Developer Action Plan (Prioritized)
+10. Month 2-3 Roadmap
+11. Monetization Timeline
+12. Competitive Position & Niche Strategy
+
+
+============================================================
+1. EXECUTIVE SUMMARY & FINAL VERDICT
+============================================================
+
+CURRENT STATE: The site is an empty template with fake data.
+It is NOT a functioning job board. It is NOT ready for users,
+AdSense, or Google Jobs. Attempting to apply for AdSense now
+will result in rejection. Attempting to rank on Google will
+fail because there is zero content and zero jobs.
+
+FINAL VERDICT - DIRECT ANSWERS:
+
+Q: Is this ready for users?
+A: NO. Zero jobs. Fake category counts. Fake user accounts.
+   Users who visit will immediately bounce and never return.
+
+Q: Is this ready for AdSense?
+A: NO. AdSense will reject this immediately because:
+   - Zero real content (thin content)
+   - Placeholder ad blocks showing admin config messages
+   - Empty blog, empty job listings
+   - Fake/hardcoded data everywhere
+   - No organic traffic to monetize
+
+Q: Is this ready for Google Jobs?
+A: NO. No JobPosting schema detected. No actual job listings
+   to markup. No indexing API integration.
+
+Q: Is this safe from a security perspective?
+A: NO. Admin panel is publicly accessible with zero authentication.
+   Anyone can view admin controls, database stats, and ingestion configs.
+
+Q: What is the single biggest blocker?
+A: ZERO JOBS IN THE DATABASE. Everything else is secondary.
+   A job board without jobs is like a store without products.
+
+Q: What should be built first?
+A: 1) Job ingestion pipeline (get real jobs flowing daily)
+   2) Authentication & security (lock down admin)
+   3) Job detail pages with proper schema
+   4) Content (blog posts, category pages)
+   5) Then apply for AdSense after 30-60 days of real content
+
+
+============================================================
+2. CRITICAL ISSUES FOUND (Security + Data)
+============================================================
+
+SECURITY - CRITICAL (Fix within 24 hours)
+-------------------------------------------
+[SEV-1] Admin Panel (/admin) is PUBLICLY ACCESSIBLE
+   - No login required. Anyone on the internet can access it.
+   - Shows: "Super Administrator Account" badge
+   - Exposes: database stats, ingestion configs, AdSense controls
+   - Risk: Complete site takeover, data deletion, config tampering
+   - FIX: Add authentication middleware. Require login + admin role.
+          Redirect unauthenticated users to login page.
+
+[SEV-1] Dashboard (/dashboard) is PUBLICLY ACCESSIBLE
+   - Shows fake user: "Hiring Account: John Doe"
+   - Any visitor can view bookmarks, application history
+   - FIX: Require authentication. Show real user data or redirect to login.
+
+[SEV-2] Employer Panel (/employer) has hardcoded fake account
+   - Shows: "Partner Account: Stripe Recruiter"
+   - No actual Stripe integration or real employer verification
+   - FIX: Add employer authentication + real Stripe checkout integration.
+
+[SEV-2] No rate limiting on job posting form
+   - Anyone can submit unlimited job posts
+   - No CAPTCHA or bot protection
+   - FIX: Add rate limiting + CAPTCHA (Google reCAPTCHA v3)
+
+[SEV-3] robots.txt leaks API structure
+   - Has "Disallow: /api/" which tells attackers where your API lives
+   - FIX: Remove this line or use proper API security (auth tokens, CORS)
+
+DATA INTEGRITY - CRITICAL
+---------------------------
+[SEV-1] ZERO jobs in database (confirmed on homepage + admin)
+   - Homepage shows: "No active job listings found"
+   - Admin confirms: Total Database Jobs = 0
+   - Category counts are COMPLETELY FAKE (hardcoded):
+     * Software: 1240+ (FAKE)
+     * Design: 320+ (FAKE)
+     * Marketing: 540+ (FAKE)
+     * Customer Support: 180+ (FAKE)
+     * Finance: 210+ (FAKE)
+     * Sales: 290+ (FAKE)
+     * Data: 420+ (FAKE)
+     * HR: 150+ (FAKE)
+   - FIX: Remove hardcoded counts. Show real counts from DB or hide
+          until jobs exist. Priority #1 is getting real jobs into DB.
+
+[SEV-1] Fake user data everywhere
+   - Dashboard: "John Doe" (hardcoded)
+   - Employer page: "Stripe Recruiter" (hardcoded)
+   - FIX: Remove all hardcoded demo data. Show empty states or real data.
+
+[SEV-2] AdSense placeholders visible to public
+   - Multiple locations showing: "AdSense Placeholder: [name]"
+   - Message reads: "No Google AdSense code script has been configured. 
+     Update this block in the Admin Settings panel to monetize."
+   - This makes the site look like an unfinished demo, not a real product
+   - FIX: Hide ad containers when no AdSense ID is configured.
+          Show them only after AdSense is approved and configured.
+
+[SEV-2] Blog is completely empty
+   - Message: "No blog articles have been written. Run seed operations 
+     to pre-seed career guidelines."
+   - This is a public-facing page - never show internal dev messages
+   - FIX: Write 10-15 real blog posts before launch. Hide blog nav link
+          until content exists.
+
+[SEV-2] Employer section "Featured Employers" is empty
+   - "Get inside access to hiring processes, reviews, and active careers"
+   - No companies listed
+   - FIX: Hide this section until you have 5+ employer partners.
+
+
+============================================================
+3. TECHNICAL SEO AUDIT
+============================================================
+
+ROBOTS.TXT - BROKEN
+-------------------
+Current: Sitemap points to https://yourdomain.com/sitemap.xml
+         (WRONG DOMAIN - this is a template placeholder!)
+Required: Sitemap: https://jobpickers.com/sitemap.xml
+Action: Fix sitemap URL immediately.
+
+SITEMAP.XML
+-----------
+- Must include: homepage, job listing pages, individual job pages,
+  category pages, location pages, blog posts, static pages
+- Must NOT include: /admin, /api/, /dashboard, search result pages
+- Add <lastmod> dates updated whenever jobs are refreshed
+- Submit to Google Search Console after fixing
+
+TITLE TAGS - NEED IMPROVEMENT
+------------------------------
+Current homepage: "JobPickers | Find Your Next Career Opportunity"
+- OK but generic. Add a value prop or niche focus.
+- Suggested: "JobPickers | Remote Software & Tech Jobs (Updated Daily)"
+
+Job listing page: Same title regardless of filters
+- Must be dynamic: "Software Engineer Jobs in Remote - JobPickers"
+- Must update based on search keywords, location, category
+
+Category pages: Not tested (no jobs to trigger them)
+- Each category needs unique title + meta description
+- Example: "Software Engineering Jobs - Remote & On-Site | JobPickers"
+
+META DESCRIPTIONS - MISSING/DUPLICATE
+------------------------------------
+- Homepage meta is OK but generic
+- Need unique meta for: every job page, every category, every location,
+  every blog post, every company page
+- Template for job detail: "[Job Title] at [Company] - [Location/Remote].
+  [Salary if available]. Apply now on JobPickers."
+
+CANONICAL URLS - NEEDED
+-----------------------
+- Every job page needs canonical: <link rel="canonical" href="[job URL]" />
+- Search result pages should have canonical pointing to base /jobs
+- Filtered views need canonical handling (or noindex)
+
+INTERNAL LINKING - POOR
+-----------------------
+- No jobs = no job detail pages = no internal link structure
+- Once jobs are ingested, add:
+  * Related jobs on each job detail page (5-10 links)
+  * Breadcrumb navigation: Home > Category > Location > Job
+  * Category links in footer and navigation
+  * Cross-links between blog posts and job categories
+
+PAGES TO INDEX vs NOINDEX
+-------------------------
+INDEX:
+  - Homepage (/)
+  - Job listing page (/jobs) - but only when jobs exist
+  - Individual job pages (/jobs/[slug]) - while active
+  - Category pages (/jobs?category=[cat])
+  - Location pages (/jobs?location=[loc])
+  - Blog posts (/blog/[slug])
+  - Static pages (/about, /contact, /privacy, /terms)
+
+NOINDEX (add <meta name="robots" content="noindex">):
+  - Search result pages with query params (?keyword=...)
+  - /admin
+  - /dashboard
+  - /api/
+  - Empty pages (blog with no posts, jobs with 0 results)
+  - Tag pages that duplicate category pages
+
+PAGINATION - NEEDED
+-------------------
+Once jobs exist, implement proper pagination:
+  - URL format: /jobs?page=2
+  - rel="prev" / rel="next" tags (or handle via canonical)
+  - 20-25 jobs per page
+
+EXPIRED JOB STRATEGY
+--------------------
+- After validThrough date passes:
+  Option A: Keep page live with "This job has expired" banner, noindex
+  Option B: 301 redirect to category page
+  Option C: Keep live if it gets traffic, mark expired, add similar jobs
+- Recommended: Option A (keep for 30 days, then noindex)
+
+DUPLICATE JOB STRATEGY
+----------------------
+- Same job posted on multiple sources:
+  * Create canonical version (best/official source)
+  * Merge duplicate listings into single page with "Also posted on: [sources]"
+  * Use source attribution links
+
+PROGRAMMATIC SEO STRATEGY
+-------------------------
+Create landing pages for high-volume searches:
+  - /remote-software-engineer-jobs
+  - /react-developer-jobs-remote
+  - /marketing-manager-jobs-[location]
+  - /entry-level-tech-jobs
+These should be auto-generated from job database with unique titles,
+h1 tags, and meta descriptions.
+
+
+============================================================
+4. GOOGLE JOBS / JOBPOSTING SCHEMA AUDIT
+============================================================
+
+CURRENT STATE: NO schema detected. No jobs to markup.
+
+REQUIRED JSON-LD TEMPLATE (implement on every job page):
+--------------------------------------------------------
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "JobPosting",
+  "title": "Senior React Developer",
+  "description": "<p>Full job description HTML here...</p>",
+  "datePosted": "2026-06-10",
+  "validThrough": "2026-07-10T23:59:59Z",
+  "employmentType": "FULL_TIME",
+  "hiringOrganization": {
+    "@type": "Organization",
+    "name": "Company Name",
+    "sameAs": "https://company.com",
+    "logo": "https://company.com/logo.png"
+  },
+  "jobLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Main St",
+      "addressLocality": "San Francisco",
+      "addressRegion": "CA",
+      "postalCode": "94105",
+      "addressCountry": "US"
+    }
+  },
+  "jobLocationType": "TELECOMMUTE",
+  "applicantLocationRequirements": {
+    "@type": "Country",
+    "name": "USA"
+  },
+  "baseSalary": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": {
+      "@type": "QuantitativeValue",
+      "minValue": 120000,
+      "maxValue": 160000,
+      "unitText": "YEAR"
+    }
+  },
+  "directApply": true,
+  "identifier": {
+    "@type": "PropertyValue",
+    "name": "JobPicker ID",
+    "value": "jp-12345"
+  }
+}
+</script>
+
+FIELD HANDLING RULES:
+--------------------
+- title: Required. Use exact job title, don't stuff keywords.
+- description: Required. Full HTML description. Must be unique, not scraped duplicate.
+- datePosted: Required. ISO 8601 format. Use original posting date.
+- validThrough: Required. Set to 30 days from datePosted if not specified.
+- employmentType: Required. Use: FULL_TIME, PART_TIME, CONTRACT, TEMPORARY, INTERN, VOLUNTEER
+- hiringOrganization.name: Required. Real company name.
+- jobLocation: Required for on-site. Include full address when available.
+- jobLocationType: TELECOMMUTE for remote jobs.
+- applicantLocationRequirements: Required for remote. Use Country type.
+- baseSalary: Recommended but not required. Omit if not available (don't guess).
+- directApply: true if application is on your site, false if external link.
+- identifier: Unique ID for deduplication.
+
+REMOTE JOBS:
+------------
+Must include BOTH:
+  "jobLocationType": "TELECOMMUTE",
+  "applicantLocationRequirements": { "@type": "Country", "name": "USA" }
+
+SALARY MISSING:
+---------------
+Omit baseSalary entirely. Do NOT include estimated or guessed salaries.
+Google penalizes inaccurate salary data.
+
+EXPIRED JOBS:
+-------------
+Remove JobPosting schema when validThrough date passes.
+Google will penalize sites with expired job schema.
+
+EXTERNAL APPLY LINKS:
+---------------------
+Set "directApply": false when linking to external application page.
+Add clear "Apply on [Company]" button with external link icon.
+
+GOOGLE INDEXING API:
+--------------------
+- Create a Google Cloud service account
+- Enable Indexing API
+- Submit job URLs immediately after publishing
+- Submit remove requests when jobs expire
+- Python example:
+  ```
+  from google.oauth2 import service_account
+  import requests
+  
+  credentials = service_account.Credentials.from_service_account_file(
+      'service-account.json',
+      scopes=['https://www.googleapis.com/auth/indexing']
+  )
+  
+  endpoint = 'https://indexing.googleapis.com/v3/urlNotifications:publish'
+  headers = {'Authorization': f'Bearer {credentials.token}'}
+  data = {
+      'url': 'https://jobpickers.com/jobs/job-slug',
+      'type': 'URL_UPDATED'
+  }
+  requests.post(endpoint, headers=headers, json=data)
+  ```
+
+COMMON GOOGLE JOBS REJECTION REASONS:
+--------------------------------------
+1. No real jobs (scraped/placeholder content) - YOU HAVE THIS NOW
+2. Missing required schema fields
+3. Expired jobs still showing as active
+4. Fake job listings (detected via patterns)
+5. Job descriptions too short (< 200 characters)
+6. All jobs point to same external site (doorway page penalty)
+7. No original content on job pages (thin content)
+
+
+============================================================
+5. ADSENSE READINESS AUDIT
+============================================================
+
+CURRENT STATE: NOT READY. Will be rejected if applied now.
+
+WHY ADSENSE WILL REJECT THIS SITE:
+----------------------------------
+[1] Thin Content: Zero job listings, zero blog posts
+[2] Placeholder Pages: Empty blog, empty employer section, empty dashboard
+[3] No Real Jobs: Site claims to aggregate jobs but has none
+[4] Fake Counts: Hardcoded category numbers are misleading
+[5] Low-Value Inventory: No content means no user engagement
+[6] Poor UX: AdSense placeholder messages showing to public
+[7] Missing Content: "No blog articles have been written" is a public message
+
+MINIMUM REQUIREMENTS BEFORE APPLYING:
+-------------------------------------
+Before AdSense application, the site MUST have:
+
+1. MINIMUM 30-50 REAL JOB LISTINGS (active, current)
+2. MINIMUM 10-15 ORIGINAL BLOG POSTS (1500+ words each)
+3. All placeholder messages REMOVED
+4. All fake/hardcoded data REPLACED with real data
+5. Privacy Policy page (exists - keep it)
+6. Terms of Service page (exists - keep it)
+7. Cookie consent banner (missing - add it)
+8. About Us page with real team/company info (missing - create it)
+9. Contact page with real contact method
+10. At least 3-4 weeks of consistent content updates
+11. Reasonable traffic (even if small - 50-100 visitors/day)
+
+AD PLACEMENT STRATEGY (Post-Approval):
+--------------------------------------
+- Above the fold: NO ads (Google penalizes this, bad UX)
+- Job listing sidebar: 1 ad (after user scrolls)
+- Job detail page: 1 ad below job description, 1 ad in sidebar
+- Blog posts: 1 ad mid-content, 1 ad sidebar
+- Homepage: 1 ad in footer area only
+- Never place ads where they interfere with job search/apply
+- NEVER use popups, auto-play video ads, or sticky ads on mobile
+
+COOKIE CONSENT REQUIREMENTS:
+----------------------------
+Must implement BEFORE AdSense:
+- EU cookie consent banner (GDPR)
+- CCPA opt-out link for California users
+- Disclose Google AdSense cookie usage in Privacy Policy
+- Use a CMP (Consent Management Platform) like CookieYes (free tier)
+
+
+============================================================
+6. PRODUCT / UX AUDIT
+============================================================
+
+WHAT WORKS:
+-----------
+- Clean, modern UI design
+- Navigation is clear and intuitive
+- Filter UI is well-designed (category, workplace, type, date, salary)
+- Job posting form is structured well
+- Footer has good link structure
+- Mobile-responsive layout (appears to be)
+
+WHAT IS BROKEN OR MISSING:
+--------------------------
+
+[CRITICAL] Empty States Show Developer Messages
+   - "No active job listings found. Visit the Admin Panel to run 
+     import crawls or run seed operations."
+   - "No blog articles have been written. Run seed operations to 
+     pre-seed career guidelines."
+   - FIX: Replace all internal/dev messages with user-friendly empty states:
+     * Jobs: "We're loading fresh jobs. Check back soon!" + newsletter signup
+     * Blog: Hide the section entirely until posts exist
+
+[CRITICAL] No Authentication System
+   - Dashboard accessible without login
+   - Admin accessible without login
+   - No user registration/login flow visible
+   - FIX: Implement auth system (recommend: NextAuth.js, Clerk, or Supabase Auth)
+     * Job seeker accounts (email, Google OAuth)
+     * Employer accounts (email verification required)
+     * Admin roles (super_admin, moderator)
+
+[HIGH] Hardcoded Demo Data
+   - "John Doe" on dashboard
+   - "Stripe Recruiter" on employer page
+   - Category job counts (1240+, 320+, etc.)
+   - FIX: Replace ALL hardcoded values with dynamic database queries.
+          Show empty states when count is zero.
+
+[HIGH] No Search Functionality
+   - Search bar exists but has no backend integration (no results)
+   - No autocomplete, no suggestions
+   - FIX: Implement full-text search (PostgreSQL tsvector, Algolia, or Meilisearch)
+
+[HIGH] No Job Detail Pages
+   - Cannot test because no jobs exist
+   - Must include: proper layout, schema markup, apply button,
+     similar jobs, company info, share buttons
+
+[MEDIUM] Salary Slider UI Issue
+   - Salary filter slider shows "$200k+/" (trailing slash typo)
+   - Experience dropdown shows "Ignition / Internship" (should be "Internship")
+
+[MEDIUM] Footer Link Typo
+   - "Career Advice Advice" (duplicate word) - appears twice in footer
+   - Fix: "Career Advice"
+
+[MEDIUM] "Featured Employers" section is empty
+   - Hide until you have employer partners
+
+[MEDIUM] No Trust Signals
+   - Missing: testimonials, user counts, company logos, press mentions,
+     security badges, SSL indicator (have SSL but not promoted)
+
+[MEDIUM] No Social Proof
+   - "Join thousands of job seekers" - cannot claim this with zero users
+   - Remove or replace with honest messaging
+
+[LOW] Copyright date says 2026
+   - Should be dynamic: 2024-2026 or just current year
+   - Use: new Date().getFullYear() for dynamic year
+
+MISSING FEATURES FOR JOB SEEKERS:
+---------------------------------
+- User registration/login
+- Save/bookmark jobs (UI exists but non-functional)
+- Email alerts for new matching jobs
+- Resume upload / profile creation
+- Job application tracking
+- Salary comparison tools
+- Company reviews
+- Mobile app (future)
+
+MISSING FEATURES FOR EMPLOYERS:
+-------------------------------
+- Real employer registration & verification
+- Stripe payment integration for paid listings
+- Employer dashboard with analytics
+- Applicant tracking
+- Job performance metrics (views, clicks, applies)
+- Company profile page
+- Multiple user seats per company
+
+MISSING ADMIN FEATURES:
+-----------------------
+- Authentication & role-based access
+- Job moderation queue
+- Employer verification workflow
+- Analytics dashboard (real data, not zeroed)
+- Content management (blog posts, pages)
+- User management
+- SEO settings (meta titles, descriptions per page)
+- AdSense configuration (hide placeholders when empty)
+- Ingestion monitoring & alerts
+- DMCA/takedown request management
+
+
+============================================================
+7. CONTENT & TRUST SIGNALS AUDIT
+============================================================
+
+CURRENT STATE: No content. No trust signals.
+
+WHAT EXISTS:
+------------
+- Privacy Policy (decent, mentions GDPR/CCPA/AdSense)
+- Terms & Conditions (not reviewed in detail)
+- Cookie Policy (page exists)
+- Editorial Guidelines (page exists)
+- DMCA Takedown Requests (page exists)
+- Job Attribution Policy (page exists)
+
+WHAT IS MISSING:
+----------------
+[1] About Us page (/about redirects to blog - 404 effectively)
+    - Need: Mission, team, story, why JobPickers exists
+    - Critical for trust and AdSense approval
+
+[2] Contact page with real contact method
+    - Need: Email, contact form, or support chat
+    - Required for AdSense and employer inquiries
+
+[3] Blog content - ZERO posts
+    - Need: 15-20 posts before launch
+    - Topics below in 90-day plan
+
+[4] Testimonials / Social proof
+    - Need: Real user quotes (collect after getting users)
+
+[5] Company logos / partner badges
+    - Need: Logos of companies whose jobs you list
+    - Build relationships for attribution
+
+[6] Trust badges
+    - SSL secure badge
+    - "Google Jobs Indexed" badge (after approval)
+    - Review badges (after getting reviews)
+
+[7] Newsletter signup works but has no content to send
+    - Don't collect emails if you have nothing to send
+    - Set up weekly digest AFTER jobs are flowing
+
+
+============================================================
+8. DATA INGESTION ARCHITECTURE
+============================================================
+
+This is the #1 priority. Without real jobs, nothing else matters.
+
+RECOMMENDED INGESTION PIPELINE:
+-------------------------------
+
+Phase 1: Start with safe, legal sources (Week 1-2)
+Phase 2: Scale to RSS and APIs (Week 3-4)
+Phase 3: ATS integrations (Month 2-3)
+
+SOURCES TO IMPLEMENT:
+---------------------
+
+1. OFFICIAL APIs (Safest, highest quality)
+   - US Federal jobs: usajobs.gov API (free)
+   - UK Civil Service: APIs available
+   - Adzuna API: 500 calls/day free tier
+   - Jooble API: Available for partners
+   - Reliability: HIGH
+   - Legality: HIGH (official APIs)
+   - Cost: Free to low
+
+2. RSS FEEDS (Good for specific niches)
+   - StackOverflow Jobs RSS (if available)
+   - WeWorkRemotely RSS
+   - RemoteOK RSS
+   - AngelList/Wellfound feeds
+   - GitHub Jobs alternatives
+   - Company career page RSS feeds
+   - Reliability: MEDIUM
+   - Legality: MEDIUM (check terms of each source)
+   - Cost: Free
+
+3. ATS PLATFORMS (Direct employer feeds)
+   - Greenhouse: Job boards API
+   - Lever: Postings API
+   - Workable: Careers API
+   - Ashby: Public API
+   - SmartRecruiters: API available
+   - Reliability: HIGH
+   - Legality: HIGH (employers opt-in)
+   - Cost: Free (read public boards)
+
+4. REMOTE JOB APIs
+   - RemoteOK API
+   - WeWorkRemotely API
+   - Remotive API
+   - FlexJobs (paid partnership)
+   - Reliability: HIGH
+   - Legality: HIGH
+   - Cost: Varies
+
+5. COMPANY CAREER PAGES (Most complex)
+   - Requires custom scraping per company
+   - Use libraries like Scrapy, Playwright
+   - Must respect robots.txt
+   - Must check Terms of Service
+   - Reliability: MEDIUM
+   - Legality: LOW-MEDIUM (risky without permission)
+   - Cost: Infrastructure only
+
+INGESTION PIPELINE STEPS:
+-------------------------
+1. SOURCE DISCOVERY: Maintain list of active sources with metadata
+2. FETCH: Scheduled pulls (cron every 2-4 hours for active sources)
+3. PARSE: Extract job data from HTML/JSON/XML
+4. NORMALIZE: Convert to standard schema (title, company, location, salary, etc.)
+5. CLASSIFY: Auto-categorize (Software, Marketing, Design, etc.)
+6. DEDUPLICATE: Hash + fuzzy matching to prevent duplicates
+7. ENRICH: Add company info, logos, location normalization
+8. SPAM/FRAUD DETECTION: Filter suspicious listings
+9. SALARY NORMALIZATION: Convert to USD annual equivalent
+10. LOCATION NORMALIZATION: Standardize city/state/country, detect remote
+11. REMOTE/HYBRID/ON-SITE DETECTION: Parse description + explicit fields
+12. EXPIRY DETECTION: Set 30-day default, check for removed listings
+13. ATTRIBUTION: Track source for every job, display "Originally posted on [Source]"
+14. PUBLISHING: Make live on site
+15. SITEMAP UPDATE: Add new job URLs, remove expired
+16. INDEXING API: Notify Google of new/updated jobs
+
+DATABASE SCHEMA RECOMMENDATION:
+-------------------------------
+```
+jobs:
+  id, title, description, company_id, category, workplace_policy,
+  employment_type, experience_level, location_raw, location_normalized,
+  country, is_remote, salary_min, salary_max, salary_currency,
+  salary_period, application_url, source_url, source_name,
+  date_posted, valid_through, status (active/expired/draft),
+  schema_markup, created_at, updated_at
+
+companies:
+  id, name, slug, website, logo_url, description, industry,
+  size, location, verified, created_at
+
+locations:
+  id, city, state, country, country_code, remote_friendly_count
+
+sources:
+  id, name, type (api/rss/ats/scrape), url, fetch_frequency,
+  last_fetch, status, api_key (encrypted), rate_limit
+
+applications:
+  id, job_id, user_id, status, applied_at, resume_url, cover_letter
+
+users:
+  id, email, name, role (seeker/employer/admin), email_verified,
+  created_at
+
+saved_jobs:
+  id, user_id, job_id, created_at
+
+alerts:
+  id, user_id, keywords, category, location, frequency,
+  last_sent, active
+
+click_events:
+  id, job_id, user_id (nullable), type (view/apply/click),
+  source, created_at
+
+audit_logs:
+  id, action, entity_type, entity_id, user_id, details, created_at
+```
+
+SCHEDULE:
+---------
+- RSS feeds: Every 2 hours
+- APIs: Every 4 hours (respect rate limits)
+- ATS boards: Every 6 hours
+- Full re-sync: Daily at 2 AM
+- Expiry check: Daily at 3 AM
+- Sitemap regeneration: After each sync
+- Indexing API push: Immediately after job publish
+
+
+============================================================
+9. 30-DAY DEVELOPER ACTION PLAN (PRIORITIZED)
+============================================================
+
+WEEK 1: CRITICAL FIXES (Days 1-7)
+----------------------------------
+
+Day 1-2: SECURITY (Highest Priority)
+[TASK-001] Lock down /admin behind authentication
+  - Implement: Login page + session management
+  - Required roles: admin, super_admin
+  - Redirect unauthenticated users to /login
+  - Difficulty: Medium | Impact: CRITICAL
+
+[TASK-002] Lock down /dashboard behind authentication
+  - Only authenticated users can access
+  - Show real user data from database
+  - Difficulty: Medium | Impact: HIGH
+
+[TASK-003] Remove hardcoded "John Doe" and "Stripe Recruiter"
+  - Replace with dynamic user data or show login prompt
+  - Difficulty: Easy | Impact: HIGH
+
+Day 3-4: REMOVE FAKE DATA
+[TASK-004] Remove hardcoded category job counts
+  - Query actual database counts OR show "Explore category" text
+  - Difficulty: Easy | Impact: HIGH
+
+[TASK-005] Hide AdSense placeholder messages from public
+  - When no AdSense ID configured, hide ad containers entirely
+  - Difficulty: Easy | Impact: MEDIUM
+
+[TASK-006] Hide empty sections
+  - Featured Employers (hide until employers exist)
+  - Blog section (hide until posts exist)
+  - Latest Job Listings (show friendly empty state + newsletter CTA)
+  - Difficulty: Easy | Impact: MEDIUM
+
+Day 5-7: START JOB INGESTION
+[TASK-007] Set up first ingestion source (Adzuna API or RSS)
+  - Get API key, write fetch script
+  - Store in database with proper schema
+  - Target: 50-100 jobs ingested by end of week
+  - Difficulty: Medium | Impact: CRITICAL
+
+[TASK-008] Implement job detail pages
+  - Dynamic route: /jobs/[slug]
+  - Include all job fields, apply button, company info
+  - Add JobPosting JSON-LD schema
+  - Difficulty: Medium | Impact: CRITICAL
+
+[TASK-009] Fix robots.txt
+  - Change sitemap URL to: https://jobpickers.com/sitemap.xml
+  - Difficulty: Easy | Impact: MEDIUM
+
+
+WEEK 2: CONTENT + SEARCH (Days 8-14)
+-------------------------------------
+
+[TASK-010] Write and publish 10 blog posts
+  - 1500+ words each, original content
+  - Topics (see below)
+  - Difficulty: Medium | Impact: HIGH
+
+[TASK-011] Implement search functionality
+  - PostgreSQL full-text search or Algolia
+  - Search by keyword, location, category
+  - Difficulty: Medium | Impact: HIGH
+
+[TASK-012] Implement user authentication
+  - Job seeker: Email + Google OAuth registration
+  - Employer: Email registration + verification
+  - Difficulty: Medium | Impact: HIGH
+
+[TASK-013] Fix all empty state messages
+  - Replace dev/internal messages with user-friendly copy
+  - Add CTAs (newsletter signup, browse categories)
+  - Difficulty: Easy | Impact: MEDIUM
+
+[TASK-014] Create About Us page
+  - Real mission, story, why JobPickers exists
+  - Team section (even if solo founder)
+  - Difficulty: Easy | Impact: MEDIUM
+
+
+WEEK 3: SEO + SCALE (Days 15-21)
+---------------------------------
+
+[TASK-015] Scale job ingestion to 3-5 sources
+  - Add 2-3 more RSS feeds or APIs
+  - Target: 200-500 jobs in database
+  - Implement deduplication logic
+  - Difficulty: Medium | Impact: CRITICAL
+
+[TASK-016] Implement dynamic SEO
+  - Unique title tags per job page, category, location
+  - Unique meta descriptions
+  - Canonical URLs
+  - Difficulty: Medium | Impact: HIGH
+
+[TASK-017] Generate sitemap.xml dynamically
+  - Include all active jobs, categories, blog posts
+  - Auto-update after each ingestion
+  - Submit to Google Search Console
+  - Difficulty: Medium | Impact: MEDIUM
+
+[TASK-018] Set up Google Indexing API
+  - Create service account
+  - Submit new job URLs automatically after ingestion
+  - Difficulty: Medium | Impact: MEDIUM
+
+[TASK-019] Implement category and location filter pages
+  - /jobs?category=software -> unique content + SEO
+  - /jobs?location=remote -> unique content + SEO
+  - Difficulty: Medium | Impact: MEDIUM
+
+
+WEEK 4: UX + MONETIZATION PREP (Days 22-30)
+--------------------------------------------
+
+[TASK-020] Write and publish 5 more blog posts (15 total)
+  - Difficulty: Medium | Impact: MEDIUM
+
+[TASK-021] Add cookie consent banner (GDPR/CCPA)
+  - Use CookieYes or similar free CMP
+  - Difficulty: Easy | Impact: MEDIUM
+
+[TASK-022] Implement employer dashboard
+  - Job posting history, analytics, edit/delete jobs
+  - Difficulty: Medium | Impact: MEDIUM
+
+[TASK-023] Add trust signals
+  - Testimonials section (collect from beta users)
+  - Security badges
+  - Updated footer with real social links
+  - Difficulty: Easy | Impact: LOW
+
+[TASK-024] Implement newsletter system
+  - Weekly job digest (not daily until volume justifies it)
+  - Use Resend, SendGrid, or Mailchimp
+  - Difficulty: Medium | Impact: MEDIUM
+
+[TASK-025] Add related jobs on job detail pages
+  - "Similar jobs" section (5-10 jobs)
+  - Internal linking for SEO
+  - Difficulty: Easy | Impact: MEDIUM
+
+
+30-DAY SUCCESS METRICS:
+-----------------------
+- Jobs in database: 500+
+- Blog posts published: 15
+- Admin panel secured: YES
+- Authentication working: YES
+- Google Search Console: Submitted
+- Indexing API: Active
+- Zero fake/hardcoded data: YES
+- Zero placeholder messages: YES
+
+
+============================================================
+10. MONTH 2-3 ROADMAP
+============================================================
+
+Month 2 Goals:
+--------------
+- Scale to 2,000+ jobs (10+ sources)
+- Add 10 more blog posts (25 total)
+- Launch programmatic SEO pages (/remote-react-jobs, etc.)
+- Start collecting user emails via newsletter
+- Apply for Google AdSense (after 30+ days of real content)
+- Reach 50+ organic visitors/day
+- Add salary estimation for common roles
+- Implement job alert emails
+- Add social sharing buttons
+
+Month 3 Goals:
+--------------
+- Scale to 5,000+ jobs
+- Add employer paid posting (Stripe integration)
+- Featured job listings ($99/post)
+- Company profile pages
+- Resume upload for job seekers
+- Basic analytics for employers
+- Apply for Google Jobs inclusion
+- Reach 200+ organic visitors/day
+- 500+ newsletter subscribers
+
+
+============================================================
+11. MONETIZATION TIMELINE
+============================================================
+
+Phase 1: AdSense (Month 2-3)
+- Requirements: 500+ jobs, 25+ blog posts, 50+ daily visitors
+- Revenue estimate: $50-200/month initially
+- Placement: Sidebar + below job descriptions
+
+Phase 2: Affiliate + Newsletter (Month 3-4)
+- Affiliate links: Coursera, Udemy, AWS certifications
+- Newsletter sponsorships
+- Revenue estimate: $100-300/month
+
+Phase 3: Paid Employer Posts (Month 3-4)
+- Free tier: Standard listing, 30 days
+- Paid tier: $99 highlighted, featured at top
+- Revenue estimate: $500-2000/month (10-20 paid posts)
+
+Phase 4: Featured Jobs + Featured Companies (Month 4-6)
+- Featured job: $99/week
+- Featured company profile: $299/month
+- Revenue estimate: $1000-5000/month
+
+Phase 5: Premium Tools (Month 6-12)
+- AI resume review
+- Premium job alerts
+- Salary insights
+- Revenue estimate: $2000-10000/month
+
+Phase 6: B2B Recruiter Products (Month 12+)
+- Applicant tracking
+- Candidate sourcing
+- Recruitment analytics
+- Revenue estimate: $5000+/month
+
+
+============================================================
+12. COMPETITIVE POSITION & NICHE STRATEGY
+============================================================
+
+DON'T COMPETE WITH INDEED/LINKEDIN HEAD-ON.
+You cannot win as a generic job board. You need a niche.
+
+RECOMMENDED NICHE: Remote Tech Jobs for Non-US Markets
+-------------------------------------------------------
+Why this niche:
+- RemoteOK and WeWorkRemotely focus heavily on US
+- Huge demand for remote tech jobs in Europe, LATAM, Asia
+- Less competition than "all jobs everywhere"
+- Higher-value audience (tech salaries)
+- Easier to build community around
+
+INITIAL FOCUS AREAS:
+--------------------
+1. Remote Software Engineering (React, Node, Python, Go)
+2. Remote Product Design (UX/UI)
+3. Remote Growth/Marketing roles
+4. Focus on: Europe, LATAM, Asia-Pacific friendly companies
+
+TRAFFIC SOURCES (First 90 Days):
+--------------------------------
+1. SEO (60% of effort): Programmatic pages, blog content
+2. Reddit: r/remotework, r/digitalnomad, country-specific subs
+3. LinkedIn: Post daily job roundups
+4. Twitter/X: Share featured remote jobs
+5. Newsletter: Weekly digest of best remote tech jobs
+6. Hacker News: "Who is hiring" monthly threads
+7. Indie Hackers: Build in public, share metrics
+8. Quora: Answer questions about remote work
+
+CONTENT TOPICS FOR FIRST 15 BLOG POSTS:
+---------------------------------------
+1. "The 50 Best Companies Hiring Remote Software Engineers in 2026"
+2. "How to Negotiate a Remote Tech Salary: Complete Guide"
+3. "Remote Work in Europe: Which Countries Offer Digital Nomad Visas"
+4. "React Developer Interview Questions: 2026 Edition"
+5. "How to Write a Remote Job Resume That Gets Noticed"
+6. "Top 10 Remote-First Companies for Product Designers"
+7. "Salary Guide: Software Engineers Working Remotely from LATAM"
+8. "How to Prepare for a Technical Interview at a Remote Company"
+9. "The Best Job Boards for Remote Tech Jobs (Besides the Big Ones)"
+10. "Remote Work Tools: What Stack Do Successful Distributed Teams Use"
+11. "How to Find Your First Remote Developer Job"
+12. "Understanding Equity and Stock Options at Remote Startups"
+13. "Time Zone Management: Working Across Continents"
+14. "The Future of Remote Work: Trends for 2026 and Beyond"
+15. "How to Stand Out When Applying for Competitive Remote Roles"
+
+
+============================================================
+LEGAL COMPLIANCE NOTES
+============================================================
+
+JOB AGGREGATION RISKS:
+----------------------
+- You CAN list jobs that are publicly posted
+- You CANNOT scrape sites that prohibit it in their Terms of Service
+- You MUST attribute the original source (link back)
+- You MUST respond to takedown requests promptly
+- You MUST NOT modify job descriptions to mislead
+
+ATTRIBUTION:
+------------
+Every job must show: "Originally posted on [Source Name]"
+Link to original listing. This protects you legally and
+builds trust with users.
+
+DMCA:
+-----
+Your DMCA page exists - good. Make sure:
+- Include physical address for DMCA notices
+- Respond within 48 hours to takedown requests
+- Keep records of all takedowns
+
+GDPR/CCPA:
+----------
+Your Privacy Policy mentions these - good. Also need:
+- Cookie consent banner (before any tracking)
+- Data deletion request process
+- Opt-out of sale/sharing (CCPA)
+- Data processing agreement if using EU workers' data
+
+TRADEMARK RISK:
+---------------
+- Do NOT use "Indeed jobs" or "LinkedIn jobs" in your titles
+- Do NOT claim to be "the new Indeed" or similar
+- Do NOT use company logos without permission
+- Your brand "JobPickers" is fine - build your own brand
+
+
+============================================================
+SUMMARY: WHAT YOUR DEVELOPER SHOULD DO FIRST
+============================================================
+
+THIS WEEK (Days 1-7):
+1. Add authentication to /admin and /dashboard
+2. Remove all hardcoded fake data (John Doe, Stripe Recruiter, counts)
+3. Hide AdSense placeholders when not configured
+4. Hide empty sections (Featured Employers, empty blog)
+5. Fix robots.txt sitemap URL
+6. Set up first job ingestion source (get 50+ real jobs)
+7. Create job detail pages with schema markup
+
+NEXT WEEK (Days 8-14):
+8. Write 10 blog posts
+9. Implement search
+10. Implement user auth (seekers + employers)
+11. Create About Us page
+12. Fix all empty state messages
+
+WEEK 3-4 (Days 15-30):
+13. Scale ingestion to 500+ jobs
+14. Dynamic SEO titles/meta for all pages
+15. Sitemap + Google Search Console
+16. Google Indexing API
+17. 5 more blog posts
+18. Cookie consent banner
+19. Newsletter system
+
+DO NOT:
+- Apply for AdSense yet (you will be rejected)
+- Try to rank on Google Jobs yet (no content)
+- Pay for ads to drive traffic yet (nothing to see)
+- Pitch employers yet (no job seekers to promise)
+
+DO THIS FIRST:
+- Get real jobs flowing (ingestion pipeline)
+- Secure the admin panel
+- Write real content
+- Build authentic user experience
+
+Once you have 500+ jobs, 15+ blog posts, and 2-4 weeks of
+consistent content updates, THEN apply for AdSense and
+start serious SEO efforts.
+
+============================================================
+END OF AUDIT
+============================================================

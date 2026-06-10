@@ -22,6 +22,7 @@ model User {
   savedJobs    SavedJob[]
   applications ApplicationTracking[]
   blogPosts    BlogPost[]
+  postedJobs   Job[]
 }
 
 // 2. Company Profile
@@ -84,6 +85,8 @@ model Job {
   // Relations
   savedBy          SavedJob[]
   applications     ApplicationTracking[]
+  postedById       String?
+  postedBy         User?     @relation(fields: [postedById], references: [id], onDelete: SetNull)
 
   // Indexing Optimization
   @@index([category])

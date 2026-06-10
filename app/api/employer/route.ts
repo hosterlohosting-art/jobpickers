@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prisma';
 import { enrichJobDetails } from '../../../lib/ai';
 import { generateJobSlug } from '../../../lib/connectors/connector';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../../lib/auth';
+import { notifyGoogleIndexing } from '../../../lib/google-indexing';
 
 // Simple regex-based XSS HTML sanitizer for description fields
 function sanitizeHtml(html: string): string {
@@ -15,6 +18,9 @@ function sanitizeHtml(html: string): string {
 
 export async function POST(request: Request) {
   try {
+    const session = await getServerSession(authOptions);
+    const postedById = session?.user ? (session.user as any).id : null;
+
     const body = await request.json();
     const {
       companyName,
@@ -123,9 +129,17 @@ export async function POST(request: Request) {
         featured: featured === 'premium',
         applyUrl,
         status: aiDetails.isSpam ? 'draft' : 'published', // Move spam posts to draft review
-        expiresAt
+        expiresAt,
+        postedById
       }
     });
+
+    // Notify Google Indexing API if published
+    if (job.status === 'published') {
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://jobpickers.com';
+      const jobUrl = `${siteUrl}/jobs/${finalSlug}`;
+      notifyGoogleIndexing(jobUrl).catch(err => console.error('[Google Indexing Error]', err));
+    }
 
     return NextResponse.json({ success: true, job }, { status: 201 });
   } catch (error: any) {
@@ -134,5 +148,41 @@ export async function POST(request: Request) {
       { error: 'Internal Server Error. Please verify Prisma migrations.' },
       { status: 500 }
     );
+  }
+}
+
+export async function GET(request: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const userId = (session.user as any).id;
+    const role = (session.user as any).role;
+
+    if (role !== 'employer' && role !== 'admin') {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    // Employers see only their own jobs, Admins see all employer jobs
+    const jobs = await prisma.job.findMany({
+      where: role === 'admin' ? { sourceName: 'Employer' } : { postedById: userId },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        company: {
+          select: {
+            name: true,
+            logo: true,
+            website: true
+          }
+        }
+      }
+    });
+
+    return NextResponse.json({ jobs });
+  } catch (error) {
+    console.error('[API Employer GET] Failed to fetch jobs:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

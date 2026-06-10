@@ -53,35 +53,37 @@ export class RSSFeedConnector implements JobSourceConnector {
       console.error(`[RSSFeedConnector] Remotive fetch error:`, e);
     }
 
-    // Fetch from Arbeitnow jobs feed
-    try {
-      console.log(`[RSSFeedConnector] Invoking Arbeitnow feed API...`);
-      const arbeitnowRes = await fetch('https://www.arbeitnow.com/api/job-board-api');
-      if (arbeitnowRes.ok) {
-        const arbeitnowJson = await arbeitnowRes.json();
-        if (arbeitnowJson.data && Array.isArray(arbeitnowJson.data)) {
-          console.log(`[RSSFeedConnector] Arbeitnow returned ${arbeitnowJson.data.length} jobs.`);
-          arbeitnowJson.data.forEach((job: any) => {
-            const minSalary = 70000 + (Math.floor(Math.random() * 6) * 10000);
-            const maxSalary = minSalary + 20000;
+    // Fetch from Arbeitnow jobs feed (pages 1 to 3 to scale up)
+    for (let page = 1; page <= 3; page++) {
+      try {
+        console.log(`[RSSFeedConnector] Invoking Arbeitnow feed API page ${page}...`);
+        const arbeitnowRes = await fetch(`https://www.arbeitnow.com/api/job-board-api?page=${page}`);
+        if (arbeitnowRes.ok) {
+          const arbeitnowJson = await arbeitnowRes.json();
+          if (arbeitnowJson.data && Array.isArray(arbeitnowJson.data)) {
+            console.log(`[RSSFeedConnector] Arbeitnow page ${page} returned ${arbeitnowJson.data.length} jobs.`);
+            arbeitnowJson.data.forEach((job: any) => {
+              const minSalary = 70000 + (Math.floor(Math.random() * 6) * 10000);
+              const maxSalary = minSalary + 20000;
 
-            jobsList.push({
-              id: `arbeitnow-${job.slug}`,
-              title: job.title,
-              company: job.company_name,
-              location: job.location || 'Germany',
-              description: job.description || '',
-              applyUrl: job.url,
-              salaryMin: minSalary,
-              salaryMax: maxSalary,
-              type: job.job_types ? job.job_types[0] : 'full-time',
-              postedAt: new Date().toISOString()
+              jobsList.push({
+                id: `arbeitnow-${job.slug}`,
+                title: job.title,
+                company: job.company_name,
+                location: job.location || 'Germany',
+                description: job.description || '',
+                applyUrl: job.url,
+                salaryMin: minSalary,
+                salaryMax: maxSalary,
+                type: job.job_types ? job.job_types[0] : 'full-time',
+                postedAt: new Date().toISOString()
+              });
             });
-          });
+          }
         }
+      } catch (e) {
+        console.error(`[RSSFeedConnector] Arbeitnow fetch error on page ${page}:`, e);
       }
-    } catch (e) {
-      console.error(`[RSSFeedConnector] Arbeitnow fetch error:`, e);
     }
 
     return jobsList.slice(0, source.dailyLimit); // Obey sync settings limit

@@ -8,14 +8,31 @@ export default function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const [subscribeError, setSubscribeError] = useState('');
+
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail('');
-      setTimeout(() => setSubscribed(false), 5000);
+    if (!email) return;
+    setSubscribeError('');
+    try {
+      const res = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: 'footer' })
+      });
+      const data = await res.json();
+      if (res.ok || data.alreadySubscribed) {
+        setSubscribed(true);
+        setEmail('');
+        setTimeout(() => setSubscribed(false), 6000);
+      } else {
+        setSubscribeError(data.error || 'Subscription failed. Please try again.');
+      }
+    } catch {
+      setSubscribeError('Network error. Please try again.');
     }
   };
+
 
   return (
     <footer className="bg-accent-teal text-white/90 border-t border-accent-tealHover mt-auto">
@@ -63,7 +80,21 @@ export default function Footer() {
               <li><Link href="/dmca" className="text-white/70 hover:text-accent-green hover:underline">DMCA Takedown Requests</Link></li>
               <li><Link href="/attribution" className="text-white/70 hover:text-accent-green hover:underline">Job Attribution Policy</Link></li>
             </ul>
+            {/* Trust Badges */}
+            <div className="mt-5 space-y-1.5">
+              <h4 className="font-bold text-white/50 uppercase tracking-wider text-[10px] mb-2">Trust & Security</h4>
+              <div className="flex items-center gap-1.5 text-[11px] text-white/50 font-semibold">
+                <Shield className="w-3.5 h-3.5 text-accent-green flex-shrink-0" /> SSL Secured Connection
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] text-white/50 font-semibold">
+                <Shield className="w-3.5 h-3.5 text-accent-green flex-shrink-0" /> GDPR & CCPA Compliant
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] text-white/50 font-semibold">
+                <Shield className="w-3.5 h-3.5 text-accent-green flex-shrink-0" /> No Resume Data Sold
+              </div>
+            </div>
           </div>
+
 
           {/* Column 4: Newsletter signups */}
           <div className="flex flex-col gap-4">
@@ -93,7 +124,13 @@ export default function Footer() {
                 <Award className="w-3.5 h-3.5" /> Subscribed successfully!
               </div>
             )}
+            {subscribeError && (
+              <div className="text-xs text-red-400 font-semibold">
+                {subscribeError}
+              </div>
+            )}
           </div>
+
         </div>
 
         {/* Bottom copyright segment */}

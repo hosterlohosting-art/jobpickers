@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
+import CookieConsentBanner from '../components/cookie-consent';
 import './globals.css';
 import { headers } from 'next/headers';
 import AdSenseContainer from '../components/adsense';
@@ -59,6 +60,7 @@ export default async function RootLayout({
           <AdSenseContainer placementName="footer" adCode={footerAdCode} className="max-w-4xl" />
         </div>
         <Footer />
+        <CookieConsentBanner />
       </body>
     </html>
   );
