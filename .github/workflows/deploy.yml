@@ -30,7 +30,7 @@ jobs:
         run: npm run build
         env:
           # (Optional) Inject production build variables here if needed
-          NEXT_PUBLIC_SITE_URL: 'https://yourdomain.com'
+          NEXT_PUBLIC_SITE_URL: 'https://jobpickers.com'
 
       - name: Create Restart Trigger
         run: |

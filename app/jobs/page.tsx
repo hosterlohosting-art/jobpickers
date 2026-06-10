@@ -252,7 +252,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
                     <option value="full-time">Full-Time</option>
                     <option value="part-time">Part-Time</option>
                     <option value="contract">Contract</option>
-                    <option value="internship">Ignition / Internship</option>
+                    <option value="internship">Internship</option>
                   </select>
                 </div>
 

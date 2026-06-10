@@ -14,6 +14,16 @@ export default async function HomePage() {
   let companies: any[] = [];
   let adTopCode = '';
   let adMiddleCode = '';
+  let counts: Record<string, number> = {
+    'Software': 0,
+    'Design': 0,
+    'Marketing': 0,
+    'Customer Support': 0,
+    'Finance': 0,
+    'Sales': 0,
+    'Data': 0,
+    'HR': 0
+  };
 
   try {
     jobs = await prisma.job.findMany({
@@ -37,20 +47,35 @@ export default async function HomePage() {
 
     const adMiddle = await prisma.adPlacement.findUnique({ where: { name: 'homepage_middle' } });
     if (adMiddle && adMiddle.isActive) adMiddleCode = adMiddle.adCode;
+
+    // Fetch dynamic category counts in a single group-by query
+    const categoryGroups = await prisma.job.groupBy({
+      by: ['category'],
+      where: { status: 'published' },
+      _count: {
+        _all: true
+      }
+    });
+
+    for (const group of categoryGroups) {
+      if (group.category && group.category in counts) {
+        counts[group.category] = group._count._all;
+      }
+    }
   } catch (error) {
     console.error('Error fetching homepage data:', error);
   }
 
   // Predefined Glassdoor-style categories mapping (aligned with canonical 8 DB categories)
   const categories = [
-    { name: 'Software', count: 1240, icon: Cpu },
-    { name: 'Design', count: 320, icon: Sparkles },
-    { name: 'Marketing', count: 540, icon: TrendingUp },
-    { name: 'Customer Support', count: 180, icon: Award },
-    { name: 'Finance', count: 210, icon: Shield },
-    { name: 'Sales', count: 290, icon: Coins },
-    { name: 'Data', count: 420, icon: Database },
-    { name: 'HR', count: 150, icon: Users }
+    { name: 'Software', count: counts['Software'], icon: Cpu },
+    { name: 'Design', count: counts['Design'], icon: Sparkles },
+    { name: 'Marketing', count: counts['Marketing'], icon: TrendingUp },
+    { name: 'Customer Support', count: counts['Customer Support'], icon: Award },
+    { name: 'Finance', count: counts['Finance'], icon: Shield },
+    { name: 'Sales', count: counts['Sales'], icon: Coins },
+    { name: 'Data', count: counts['Data'], icon: Database },
+    { name: 'HR', count: counts['HR'], icon: Users }
   ];
 
   return (
@@ -175,8 +200,8 @@ export default async function HomePage() {
             ))}
           </div>
         ) : (
-          <div className="bg-white border border-grayBorder rounded-lg p-8 text-center text-slateText-muted">
-            No active job listings found. Visit the Admin Panel to run import crawls or run seed operations.
+          <div className="bg-white border border-grayBorder rounded-lg p-8 text-center text-slateText-muted text-sm font-semibold">
+            We are currently loading fresh job opportunities. Please check back shortly, or subscribe to our newsletter below to receive weekly job alerts!
           </div>
         )}
       </section>
@@ -187,36 +212,38 @@ export default async function HomePage() {
       </div>
 
       {/* 4. FEATURED COMPANIES */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex items-end justify-between border-b border-grayBorder pb-4 mb-6">
-          <div>
-            <h2 className="text-xl font-extrabold text-slateText-primary">Featured Employers</h2>
-            <p className="text-xs text-slateText-muted mt-1">Get inside access to hiring processes, reviews, and active careers.</p>
-          </div>
-          <Link href="/jobs" className="text-xs font-bold text-accent-green hover:underline">
-            View All Companies
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {companies.map((comp) => (
-            <Link
-              key={comp.name}
-              href={`/companies/${comp.slug}`}
-              className="bg-white border border-grayBorder rounded-lg p-5 flex items-start gap-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-accent-green/30"
-            >
-              <CompanyLogo logo={comp.logo} name={comp.name} className="w-12 h-12" textClassName="text-lg font-extrabold" />
-              <div>
-                <h3 className="font-bold text-slateText-primary text-sm hover:text-accent-green">{comp.name}</h3>
-                <p className="text-xs text-slateText-muted mt-0.5">{comp.location}</p>
-                <div className="flex items-center gap-4 mt-2 text-[10px] font-bold text-slateText-muted uppercase tracking-wider">
-                  <span>Size: {comp.size}</span>
-                </div>
-              </div>
+      {companies.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex items-end justify-between border-b border-grayBorder pb-4 mb-6">
+            <div>
+              <h2 className="text-xl font-extrabold text-slateText-primary">Featured Employers</h2>
+              <p className="text-xs text-slateText-muted mt-1">Get inside access to hiring processes, reviews, and active careers.</p>
+            </div>
+            <Link href="/jobs" className="text-xs font-bold text-accent-green hover:underline">
+              View All Companies
             </Link>
-          ))}
-        </div>
-      </section>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {companies.map((comp) => (
+              <Link
+                key={comp.name}
+                href={`/companies/${comp.slug}`}
+                className="bg-white border border-grayBorder rounded-lg p-5 flex items-start gap-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-accent-green/30"
+              >
+                <CompanyLogo logo={comp.logo} name={comp.name} className="w-12 h-12" textClassName="text-lg font-extrabold" />
+                <div>
+                  <h3 className="font-bold text-slateText-primary text-sm hover:text-accent-green">{comp.name}</h3>
+                  <p className="text-xs text-slateText-muted mt-0.5">{comp.location}</p>
+                  <div className="flex items-center gap-4 mt-2 text-[10px] font-bold text-slateText-muted uppercase tracking-wider">
+                    <span>Size: {comp.size}</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* 5. NEWSLETTER BANNER (EMERALD) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">

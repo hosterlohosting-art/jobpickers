@@ -23,7 +23,12 @@ export default function AdSenseContainer({ placementName, adCode, className = ''
 
   // In production, if we have actual AdSense code script configured, parse and inject it.
   // We wrap it in a container that reserves height (min-h-[100px] to min-h-[250px] depending on device) to avoid CLS.
-  if (isProd && activeCode) {
+  if (isProd) {
+    // If no adCode is configured or it is just a seeded mock placeholder, return null to avoid cluttering the UI
+    if (!activeCode || activeCode.includes('Mock') || activeCode.trim().length === 0) {
+      return null;
+    }
+
     return (
       <div className={`adsense-container mx-auto my-4 w-full flex flex-col items-center ${className}`}>
         <span className="text-[10px] font-bold text-slateText-muted/50 uppercase tracking-widest mb-1.5 block text-center">

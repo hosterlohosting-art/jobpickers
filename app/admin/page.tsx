@@ -1,10 +1,18 @@
 import { prisma } from '../../lib/prisma';
 import { ShieldCheck } from 'lucide-react';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import { authOptions } from '../../lib/auth';
 import AdminClientDashboard from './admin-client';
 
 export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboardPage() {
+  const session = await getServerSession(authOptions);
+  if (!session || (session.user as any).role !== 'admin') {
+    redirect('/login?callbackUrl=/admin');
+  }
+
   let stats = { 
     total: 0, 
     active: 0, 
