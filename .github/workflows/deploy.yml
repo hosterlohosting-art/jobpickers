@@ -41,7 +41,7 @@ jobs:
           port: 21 # Change to 22 if using SFTP (recommended)
           
           # Deploy to your specific cPanel application directory
-          server-dir: /
+          server-dir: jobpickers.com/
           
           # Crucial exclusions: Prevent overwriting SQLite database and local config secrets
           exclude: |
