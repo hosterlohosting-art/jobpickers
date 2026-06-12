@@ -20,12 +20,15 @@ function calcReadingTime(html: string): number {
 
 // Extract H2 headings for Table of Contents
 function extractHeadings(html: string): { id: string; text: string }[] {
-  const matches = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gi)];
-  return matches.map((m) => {
-    const text = m[1].replace(/<[^>]*>/g, '').trim();
+  const regex = /<h2[^>]*>(.*?)<\/h2>/gi;
+  const headings: { id: string; text: string }[] = [];
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    const text = match[1].replace(/<[^>]*>/g, '').trim();
     const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-    return { id, text };
-  });
+    headings.push({ id, text });
+  }
+  return headings;
 }
 
 // Inject IDs into H2 tags for anchor linking
