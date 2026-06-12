@@ -23,6 +23,7 @@ model User {
   applications ApplicationTracking[]
   blogPosts    BlogPost[]
   postedJobs   Job[]
+  reviews      CompanyReview[]
 }
 
 // 2. Company Profile
@@ -41,6 +42,7 @@ model Company {
   
   // Relations
   jobs        Job[]
+  reviews     CompanyReview[]
 }
 
 // 3. Job Posting (Life-cycle managed)
@@ -180,4 +182,23 @@ model AdPlacement {
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// 10. Company Reviews (Glassdoor features)
+model CompanyReview {
+  id                 String   @id @default(uuid())
+  companyId          String
+  company            Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  userId             String?  // Optional, if logged in
+  user               User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  roleTitle          String   // e.g. "Software Engineer"
+  rating             Int      // 1 to 5
+  pros               String
+  cons               String
+  adviceToManagement String?
+  isCurrentEmployee  Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([companyId])
 }

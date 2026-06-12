@@ -1156,6 +1156,70 @@ async function main() {
   }
 
   console.log('Saved jobs and tracking seeded successfully.');
+
+  // 9. Create Company Reviews (Glassdoor features)
+  const stripeCompany = await prisma.company.findUnique({ where: { slug: 'stripe' } });
+  const vercelCompany = await prisma.company.findUnique({ where: { slug: 'vercel' } });
+  const googleCompany = await prisma.company.findUnique({ where: { slug: 'google' } });
+  const shopifyCompany = await prisma.company.findUnique({ where: { slug: 'shopify' } });
+
+  const mockReviews = [
+    {
+      companyId: stripeCompany?.id || '',
+      roleTitle: 'Software Engineer',
+      rating: 5,
+      pros: 'Excellent compensation packages, highly talented peers, and a culture that truly values engineering excellence and code quality.',
+      cons: 'Heavy workload and high performance expectations can occasionally lead to long hours, especially before major product launches.',
+      adviceToManagement: 'Keep developer velocity high by continuing to invest in internal developer tooling and automation.',
+      isCurrentEmployee: true
+    },
+    {
+      companyId: stripeCompany?.id || '',
+      roleTitle: 'Product Manager',
+      rating: 4,
+      pros: 'Stripe is an incredible brand to have on your resume. You get to work on massive financial scale problems with smart stakeholders.',
+      cons: 'Decision making can sometimes feel slow due to the size of the organization and the need for cross-team alignments.',
+      adviceToManagement: 'Empower individual teams to move faster with fewer check-ins.',
+      isCurrentEmployee: false
+    },
+    {
+      companyId: vercelCompany?.id || '',
+      roleTitle: 'Frontend Engineer',
+      rating: 5,
+      pros: 'Dream job for frontend developers. The focus on Next.js, design quality, speed, and overall user experience is top-notch.',
+      cons: 'Fast-paced startup environment where priorities can shift quickly. You need to be highly self-motivated and adaptable.',
+      adviceToManagement: 'Maintain the strong open-source contribution focus.',
+      isCurrentEmployee: true
+    },
+    {
+      companyId: googleCompany?.id || '',
+      roleTitle: 'Senior Site Reliability Engineer',
+      rating: 4,
+      pros: 'Unmatched scale, incredible benefit packages, free food, and a very smart, collaborative team structure.',
+      cons: 'The company has grown very large, resulting in complex bureaucratic processes even for simple internal changes.',
+      adviceToManagement: 'Streamline promotion tracks and reduce administrative overhead.',
+      isCurrentEmployee: true
+    },
+    {
+      companyId: shopifyCompany?.id || '',
+      roleTitle: 'UX Designer',
+      rating: 5,
+      pros: 'Shopify has a deeply ingrained design culture. Design has a seat at the leadership table, and collaboration is very smooth.',
+      cons: 'Remote work across different time zones requires a lot of documentation and written alignment, which takes time.',
+      adviceToManagement: 'Continue supporting asynchronous work practices and reduce recurring meetings.',
+      isCurrentEmployee: true
+    }
+  ];
+
+  for (const review of mockReviews) {
+    if (review.companyId) {
+      await prisma.companyReview.create({
+        data: review
+      });
+    }
+  }
+
+  console.log(`Mock Company Reviews seeded: ${mockReviews.length} reviews.`);
   console.log('Seed operations complete! Default Admin Account: admin@jobpickers.com / admin123');
 }
 
