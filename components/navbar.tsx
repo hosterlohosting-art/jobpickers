@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Briefcase, FileText, PlusCircle, Bookmark, Menu, X } from 'lucide-react';
+import { Briefcase, FileText, PlusCircle, Bookmark, Menu, X, Building2 } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Navbar() {
@@ -11,6 +11,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Find Jobs', href: '/jobs', icon: Briefcase },
+    { name: 'Companies', href: '/companies', icon: Building2 },
     { name: 'Dashboard', href: '/dashboard', icon: Bookmark },
     { name: 'Career Advice', href: '/blog', icon: FileText },
     { name: 'Post a Job', href: '/employer', icon: PlusCircle },

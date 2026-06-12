@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { createClient } from '@libsql/client';
 import { PrismaLibSQL } from '@prisma/adapter-libsql';
+import { startSyncScheduler } from './sync-scheduler';
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
@@ -30,4 +31,7 @@ const createPrismaClient = () => {
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+
+// Boot auto-synchronization background runner
+startSyncScheduler();
 
