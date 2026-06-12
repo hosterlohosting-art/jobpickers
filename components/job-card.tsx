@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { MapPin, Clock, DollarSign, Bookmark, ArrowUpRight, Star } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { MapPin, DollarSign, Bookmark, ArrowUpRight, Star } from 'lucide-react';
 import { useState } from 'react';
 import CompanyLogo from './company-logo';
 
@@ -80,8 +81,10 @@ export default function JobCard({ job, isSaved = false, onSaveToggle, onApplyCli
   };
 
   const handleApply = (e: React.MouseEvent) => {
+    e.preventDefault();
     e.stopPropagation();
-    if (onApplyClick) onApplyClick(job.id);
+    // Open the apply redirect tracker in a new tab
+    window.open(`/api/jobs/apply?id=${job.id}`, '_blank', 'noopener,noreferrer');
   };
 
   const getCompanyInitial = () => job.company.name.charAt(0).toUpperCase();
