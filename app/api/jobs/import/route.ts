@@ -241,7 +241,9 @@ async function handleImport(sourceId: string | null) {
               sourceUrl: normalized.sourceUrl || null,
               applyUrl: normalized.applyUrl,
               status: 'published',
-              expiresAt: normalized.expiresAt
+              expiresAt: normalized.expiresAt,
+              country: normalized.country || 'US',
+              city: normalized.city || null
             }
           });
 

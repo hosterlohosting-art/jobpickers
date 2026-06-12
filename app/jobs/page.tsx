@@ -8,6 +8,7 @@ interface JobsPageProps {
   searchParams: {
     keyword?: string;
     location?: string;
+    country?: string;
     category?: string;
     remoteType?: string;
     employmentType?: string;
@@ -21,6 +22,7 @@ interface JobsPageProps {
 export default async function JobsPage({ searchParams }: JobsPageProps) {
   const keyword = searchParams.keyword || '';
   const location = searchParams.location || '';
+  const country = searchParams.country || '';
   const category = searchParams.category || '';
   const remoteType = searchParams.remoteType || '';
   const employmentType = searchParams.employmentType || '';
@@ -52,8 +54,21 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     if (location.toLowerCase() === 'remote') {
       whereClause.remoteType = 'remote';
     } else {
-      whereClause.location = { contains: location };
+      whereClause.AND = [
+        ...(whereClause.AND || []),
+        {
+          OR: [
+            { location: { contains: location } },
+            { country: { contains: location } }
+          ]
+        }
+      ];
     }
+  }
+
+  // Country query
+  if (country) {
+    whereClause.country = country;
   }
 
   // Category query
@@ -131,6 +146,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     const params = new URLSearchParams();
     if (keyword) params.set('keyword', keyword);
     if (location) params.set('location', location);
+    if (country) params.set('country', country);
     if (category) params.set('category', category);
     if (remoteType) params.set('remoteType', remoteType);
     if (employmentType) params.set('employmentType', employmentType);
@@ -209,6 +225,31 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
                 {/* Preserve search keywords */}
                 <input type="hidden" name="keyword" value={keyword} />
                 <input type="hidden" name="location" value={location} />
+
+                {/* Country Select */}
+                <div>
+                  <label className="block text-xs font-bold text-slateText-secondary uppercase mb-2">Country</label>
+                  <select
+                    name="country"
+                    defaultValue={country}
+                    className="w-full bg-grayBg border border-grayBorder rounded p-2 text-xs font-semibold outline-none focus:border-accent-green"
+                  >
+                    <option value="">All Countries</option>
+                    <option value="US">United States (US)</option>
+                    <option value="GB">United Kingdom (UK)</option>
+                    <option value="DE">Germany (DE)</option>
+                    <option value="CA">Canada (CA)</option>
+                    <option value="FR">France (FR)</option>
+                    <option value="NL">Netherlands (NL)</option>
+                    <option value="ES">Spain (ES)</option>
+                    <option value="IN">India (IN)</option>
+                    <option value="SG">Singapore (SG)</option>
+                    <option value="AU">Australia (AU)</option>
+                    <option value="BR">Brazil (BR)</option>
+                    <option value="IE">Ireland (IE)</option>
+                    <option value="Remote">Global / Remote</option>
+                  </select>
+                </div>
 
                 {/* Category Select */}
                 <div>

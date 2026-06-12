@@ -130,7 +130,9 @@ export async function POST(request: Request) {
         applyUrl,
         status: aiDetails.isSpam ? 'draft' : 'published', // Move spam posts to draft review
         expiresAt,
-        postedById
+        postedById,
+        country: aiDetails.location.country || 'US',
+        city: aiDetails.location.city || null
       }
     });
 

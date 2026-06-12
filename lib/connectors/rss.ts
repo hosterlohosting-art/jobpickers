@@ -168,7 +168,9 @@ export class RSSFeedConnector implements JobSourceConnector {
         }
         return new Date();
       })(),
-      expiresAt: defaultExpiry
+      expiresAt: defaultExpiry,
+      country: aiDetails.location.country || 'US',
+      city: aiDetails.location.city || null
     };
   }
 

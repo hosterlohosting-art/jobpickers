@@ -40,6 +40,8 @@ export interface NormalizedJob {
   applyUrl: string;
   postedAt: Date;
   expiresAt: Date;
+  country?: string;
+  city?: string | null;
 }
 
 export interface ValidationResult {
