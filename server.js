@@ -48,8 +48,8 @@ if (process.env.NODE_ENV === 'production' || !process.env.NODE_ENV) {
       env: process.env // pass loaded env variables
     });
     console.log('> Prisma Client generation completed successfully!');
-  } catch (e: any) {
-    console.error('> Failed to generate Prisma Client on boot:', e.message);
+  } catch (e) {
+    console.error('> Failed to generate Prisma Client on boot:', e.message || e);
   }
 }
 
