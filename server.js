@@ -4,6 +4,7 @@ import next from 'next';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,6 +36,21 @@ try {
   }
 } catch (e) {
   console.error('> Failed to load .env file manually:', e);
+}
+
+// Automatically generate Prisma Client on server boot if running in production/cPanel
+if (process.env.NODE_ENV === 'production' || !process.env.NODE_ENV) {
+  try {
+    console.log('> Production boot: Generating Prisma Client for cPanel architecture...');
+    execSync('npx prisma generate', { 
+      cwd: __dirname,
+      stdio: 'inherit',
+      env: process.env // pass loaded env variables
+    });
+    console.log('> Prisma Client generation completed successfully!');
+  } catch (e: any) {
+    console.error('> Failed to generate Prisma Client on boot:', e.message);
+  }
 }
 
 const dev = process.env.NODE_ENV !== 'production';
