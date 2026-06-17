@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { MapPin, DollarSign, Bookmark, ArrowUpRight, Star } from 'lucide-react';
+import { MapPin, DollarSign, Bookmark, ArrowRight, Star } from 'lucide-react';
 import { useState } from 'react';
 import CompanyLogo from './company-logo';
 
@@ -78,13 +78,6 @@ export default function JobCard({ job, isSaved = false, onSaveToggle, onApplyCli
       console.error('Failed to save bookmark:', err);
       setSaved(previousSaved);
     }
-  };
-
-  const handleApply = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    // Open the apply redirect tracker in a new tab
-    window.open(`/api/jobs/apply?id=${job.id}`, '_blank', 'noopener,noreferrer');
   };
 
   const getCompanyInitial = () => job.company.name.charAt(0).toUpperCase();
@@ -172,13 +165,13 @@ export default function JobCard({ job, isSaved = false, onSaveToggle, onApplyCli
             <span>
               Posted {getRelativeTime(job.postedAt)} &bull; Source: <span className="font-semibold text-slateText-secondary">{job.sourceName}</span>
             </span>
-            <button
-              onClick={handleApply}
+            <Link
+              href={`/jobs/${job.slug}`}
               className="flex items-center gap-1 font-bold text-accent-green hover:text-accent-greenHover group transition-colors"
             >
-              <span>Apply</span>
-              <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
+              <span>View Job</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+            </Link>
           </div>
 
         </div>
