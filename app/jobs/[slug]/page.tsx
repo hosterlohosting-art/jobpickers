@@ -4,7 +4,7 @@ import { prisma } from '../../../lib/prisma';
 import { MapPin, Clock, DollarSign, Calendar, Building2, Globe, ShieldCheck, ArrowLeft, Bookmark, AlertCircle, ExternalLink } from 'lucide-react';
 import AdSenseContainer from '../../../components/adsense';
 import JobCard from '../../../components/job-card';
-import { getRelativeTime } from '../../../components/job-card';
+import { getRelativeTime } from '../../../lib/utils';
 import { Metadata } from 'next';
 import CompanyLogo from '../../../components/company-logo';
 import BookmarkButton from '../../../components/bookmark-button';
