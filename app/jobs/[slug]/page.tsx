@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { prisma } from '../../../lib/prisma';
-import { MapPin, Clock, DollarSign, Calendar, Building2, Globe, ShieldCheck, ArrowLeft, Bookmark, AlertCircle } from 'lucide-react';
+import { MapPin, Clock, DollarSign, Calendar, Building2, Globe, ShieldCheck, ArrowLeft, Bookmark, AlertCircle, ExternalLink } from 'lucide-react';
 import AdSenseContainer from '../../../components/adsense';
 import JobCard from '../../../components/job-card';
 import { getRelativeTime } from '../../../components/job-card';
@@ -219,12 +219,10 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
                 </button>
               ) : (
                 <a
-                  href={`/api/jobs/apply?id=${job.id}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-accent-green hover:bg-accent-greenHover text-white text-sm font-bold px-6 py-3 rounded-md transition-colors shadow-sm inline-flex items-center justify-center gap-1"
+                  href="#apply-section"
+                  className="bg-accent-green/10 hover:bg-accent-green/20 text-accent-green text-sm font-bold px-6 py-3 rounded-md transition-colors shadow-sm inline-flex items-center justify-center gap-1.5"
                 >
-                  <span>Apply on Company Site</span>
+                  <span>Apply Now</span>
                 </a>
               )}
               <BookmarkButton jobId={job.id} initialSaved={isSaved} />
@@ -261,6 +259,35 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
                 </div>
               </div>
             )}
+
+            {/* Apply section at the bottom of the description */}
+            <div id="apply-section" className="mt-8 pt-6 border-t border-grayBorder flex flex-col sm:flex-row gap-4 items-center justify-between">
+              <div>
+                <h4 className="text-sm font-bold text-slateText-primary">Ready to apply?</h4>
+                <p className="text-xs text-slateText-muted">You will be redirected to the official company application portal.</p>
+              </div>
+              <div className="flex gap-3 w-full sm:w-auto">
+                {job.status === 'expired' ? (
+                  <button
+                    disabled
+                    className="w-full sm:w-auto text-center bg-slateText-muted/20 text-slateText-muted cursor-not-allowed text-xs font-bold px-6 py-3 rounded bg-grayBg border border-grayBorder"
+                  >
+                    Position Expired
+                  </button>
+                ) : (
+                  <a
+                    href={`/api/jobs/apply?id=${job.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto text-center bg-accent-green hover:bg-accent-greenHover text-white text-sm font-bold px-6 py-3 rounded-md transition-colors shadow-sm inline-flex items-center justify-center gap-2"
+                  >
+                    <span>Apply on Company Site</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                )}
+                <BookmarkButton jobId={job.id} initialSaved={isSaved} />
+              </div>
+            </div>
           </div>
 
           {/* Related/Similar listings */}

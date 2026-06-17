@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-grayBg text-slateText-primary font-sans antialiased min-h-screen flex flex-col;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
