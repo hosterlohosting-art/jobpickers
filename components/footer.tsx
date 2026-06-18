@@ -64,6 +64,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm">
               <li><Link href="/jobs" className="text-white/70 hover:text-accent-green hover:underline">Search All Jobs</Link></li>
               <li><Link href="/companies" className="text-white/70 hover:text-accent-green hover:underline">Company Directory</Link></li>
+              <li><Link href="/salaries" className="text-white/70 hover:text-accent-green hover:underline">Salaries & Reviews</Link></li>
               <li><Link href="/dashboard" className="text-white/70 hover:text-accent-green hover:underline">My Seeker Account</Link></li>
               <li><Link href="/blog" className="text-white/70 hover:text-accent-green hover:underline">Career Advice</Link></li>
               <li><Link href="/jobs/category/software" className="text-white/70 hover:text-accent-green hover:underline">Developer Careers</Link></li>
