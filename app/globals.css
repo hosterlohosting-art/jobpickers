@@ -7,32 +7,52 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-grayBg text-slateText-primary font-sans antialiased min-h-screen flex flex-col;
+    @apply bg-background text-slateText-primary font-sans antialiased min-h-screen flex flex-col;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-image: radial-gradient(circle at 50% 0%, #0c1222 0%, #070a13 80%);
   }
 }
 
-/* Custom Scrollbar Styles matching Glassdoor layout */
+/* Cosmic Custom Scrollbar Styles */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-grayBg;
+  @apply bg-background;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slateText-muted/30 rounded-md;
+  @apply bg-slateText-muted/40 rounded-md;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slateText-muted/50;
+  @apply bg-accent-green/75;
 }
 
-/* Glassdoor-style clean rounded card overrides */
+/* Glassmorphic premium card overrides */
+.glass-panel {
+  @apply bg-grayBg/60 backdrop-blur-md border border-grayBorder/40 rounded-lg;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
 .card-hover-effect {
-  @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-accent-green/30;
+  @apply transition-all duration-300 hover:-translate-y-1 hover:border-accent-green/40 hover:shadow-lg hover:shadow-accent-green/5;
+}
+
+/* Page transitions & glows */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 6s infinite ease-in-out;
 }
 
 /* Cookie consent banner animation */

@@ -82,19 +82,19 @@ export default async function HomePage() {
     <div className="flex flex-col gap-12 pb-16">
       
       {/* 1. HERO SECTION */}
-      <section className="bg-accent-teal text-white py-16 md:py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(12,170,65,0.15),transparent)] pointer-events-none" />
+      <section className="bg-gradient-to-b from-accent-teal to-background text-white py-16 md:py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(16,185,129,0.06),transparent_60%)] pointer-events-none" />
         
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
             Find the Job That <span className="text-accent-green">Fits Your Life</span>
           </h1>
-          <p className="text-sm md:text-base text-white/70 mt-3 max-w-xl mx-auto">
+          <p className="text-sm md:text-base text-slateText-secondary mt-3 max-w-xl mx-auto">
             JobPickers aggregates, normalizes, and filters thousands of developer, designer, and product careers daily.
           </p>
 
           {/* Unified Search Form (GET redirect to /jobs) */}
-          <form action="/jobs" method="GET" className="bg-white rounded-lg p-2 shadow-lg mt-8 flex flex-col md:flex-row gap-2 items-center border border-accent-green/20">
+          <form action="/jobs" method="GET" className="bg-grayBg/50 backdrop-blur-md rounded-lg p-2 shadow-lg mt-8 flex flex-col md:flex-row gap-2 items-center border border-grayBorder/40 focus-within:border-accent-green/60 transition-colors">
             <div className="flex items-center gap-2 px-3 py-1 flex-grow w-full md:w-auto">
               <Search className="w-5 h-5 text-slateText-muted flex-shrink-0" />
               <input
@@ -105,7 +105,7 @@ export default async function HomePage() {
               />
             </div>
             
-            <div className="h-px md:h-8 w-full md:w-px bg-grayBorder my-1 md:my-0 flex-shrink-0" />
+            <div className="h-px md:h-8 w-full md:w-px bg-grayBorder/40 my-1 md:my-0 flex-shrink-0" />
 
             <div className="flex items-center gap-2 px-3 py-1 flex-grow w-full md:w-auto">
               <MapPin className="w-5 h-5 text-slateText-muted flex-shrink-0" />
@@ -127,13 +127,13 @@ export default async function HomePage() {
           </form>
 
           {/* Popular Searches */}
-          <div className="flex flex-wrap justify-center items-center gap-2 mt-5 text-xs text-white/60">
+          <div className="flex flex-wrap justify-center items-center gap-2 mt-5 text-xs text-white/50">
             <span className="font-semibold">Popular Searches:</span>
             {['React', 'Next.js', 'Remote', 'Product Designer', 'Growth SEO'].map((term) => (
               <Link 
                 key={term}
                 href={`/jobs?keyword=${term}`} 
-                className="bg-white/10 hover:bg-white/20 text-white font-semibold px-2.5 py-1 rounded transition-colors"
+                className="bg-white/5 hover:bg-white/10 text-white font-semibold px-2.5 py-1 rounded transition-colors border border-white/5"
               >
                 {term}
               </Link>
@@ -149,7 +149,7 @@ export default async function HomePage() {
 
       {/* 2. POPULAR CATEGORIES */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex items-end justify-between border-b border-grayBorder pb-4 mb-6">
+        <div className="flex items-end justify-between border-b border-grayBorder/40 pb-4 mb-6">
           <div>
             <h2 className="text-xl font-extrabold text-slateText-primary">Popular Categories</h2>
             <p className="text-xs text-slateText-muted mt-1">Explore job openings categorized dynamically by our AI normalizer.</p>
@@ -166,7 +166,7 @@ export default async function HomePage() {
               <Link
                 key={cat.name}
                 href={`/jobs?category=${cat.name}`}
-                className="bg-white border border-grayBorder rounded-lg p-5 flex flex-col items-center justify-center text-center transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-accent-green/30"
+                className="bg-grayBg/40 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 flex flex-col items-center justify-center text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent-green/5 hover:border-accent-green/45"
               >
                 <div className="w-10 h-10 rounded-full bg-accent-green/10 flex items-center justify-center text-accent-green mb-3">
                   <Icon className="w-5 h-5" />
@@ -183,7 +183,7 @@ export default async function HomePage() {
 
       {/* 3. FEATURED JOBS */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex items-end justify-between border-b border-grayBorder pb-4 mb-6">
+        <div className="flex items-end justify-between border-b border-grayBorder/40 pb-4 mb-6">
           <div>
             <h2 className="text-xl font-extrabold text-slateText-primary">Latest Job Listings</h2>
             <p className="text-xs text-slateText-muted mt-1">Direct employer postings and active crawls imported today.</p>
@@ -200,7 +200,7 @@ export default async function HomePage() {
             ))}
           </div>
         ) : (
-          <div className="bg-white border border-grayBorder rounded-lg p-8 text-center text-slateText-muted text-sm font-semibold">
+          <div className="bg-grayBg/40 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 text-center text-slateText-muted text-sm font-semibold">
             We are currently loading fresh job opportunities. Please check back shortly, or subscribe to our newsletter below to receive weekly job alerts!
           </div>
         )}
@@ -214,7 +214,7 @@ export default async function HomePage() {
       {/* 4. FEATURED COMPANIES */}
       {companies.length > 0 && (
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="flex items-end justify-between border-b border-grayBorder pb-4 mb-6">
+          <div className="flex items-end justify-between border-b border-grayBorder/40 pb-4 mb-6">
             <div>
               <h2 className="text-xl font-extrabold text-slateText-primary">Featured Employers</h2>
               <p className="text-xs text-slateText-muted mt-1">Get inside access to hiring processes, reviews, and active careers.</p>
@@ -229,7 +229,7 @@ export default async function HomePage() {
               <Link
                 key={comp.name}
                 href={`/companies/${comp.slug}`}
-                className="bg-white border border-grayBorder rounded-lg p-5 flex items-start gap-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-accent-green/30"
+                className="bg-grayBg/40 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 flex items-start gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent-green/5 hover:border-accent-green/45"
               >
                 <CompanyLogo logo={comp.logo} name={comp.name} className="w-12 h-12" textClassName="text-lg font-extrabold" />
                 <div>
@@ -247,8 +247,8 @@ export default async function HomePage() {
 
       {/* 5. NEWSLETTER BANNER (EMERALD) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="bg-accent-green text-white rounded-lg p-8 md:p-10 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-md relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(26,67,50,0.15),transparent)] pointer-events-none" />
+        <div className="bg-gradient-to-r from-accent-green to-emerald-600 text-white rounded-lg p-8 md:p-10 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-lg relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(26,67,50,0.12),transparent)] pointer-events-none" />
           
           <div className="max-w-md">
             <h2 className="text-2xl font-extrabold tracking-tight">Stay ahead of the crowd</h2>

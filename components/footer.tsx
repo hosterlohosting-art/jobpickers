@@ -35,7 +35,7 @@ export default function Footer() {
 
 
   return (
-    <footer className="bg-accent-teal text-white/90 border-t border-accent-tealHover mt-auto">
+    <footer className="bg-accent-teal text-white/90 border-t border-grayBorder/40 mt-auto">
       {/* Top segments: brand, lists, newsletter */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
@@ -136,7 +136,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom copyright segment */}
-        <div className="border-t border-white/10 mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50 font-semibold">
+        <div className="border-t border-grayBorder/40 mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50 font-semibold">
           <div>
             &copy; {new Date().getFullYear()} JobPickers.com. All rights reserved.
           </div>

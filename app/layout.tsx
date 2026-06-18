@@ -51,7 +51,7 @@ export default async function RootLayout({
       <head>
         <link rel="canonical" href={canonicalUrl} />
       </head>
-      <body className="flex flex-col min-h-screen bg-grayBg">
+      <body className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow">
           {children}

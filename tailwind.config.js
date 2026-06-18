@@ -8,20 +8,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#ffffff',
+        background: '#070a13',
         accent: {
-          green: '#0CAA41',      // Glassdoor Signature Green
-          greenHover: '#088F35',
-          teal: '#1A4332',       // Premium Dark Teal for headers
-          tealHover: '#133225'
+          green: '#10b981',      // Glowing Emerald Green
+          greenHover: '#059669',
+          teal: '#0a0d18',       // Deep Midnight Slate for headers/panels
+          tealHover: '#13192c'
         },
         slateText: {
-          primary: '#111827',    // High-contrast near-black
-          secondary: '#4B5563',  // Slate gray
-          muted: '#6B7280'       // Muted gray
+          primary: '#f3f4f6',    // High-contrast near-white
+          secondary: '#a1a1aa',  // Light zinc gray
+          muted: '#71717a'       // Muted zinc gray
         },
-        grayBg: '#F7F8FA',
-        grayBorder: '#E5E7EB'
+        grayBg: '#0f1423',       // Dark graphite card base
+        grayBorder: '#1e293b'    // Deep slate borders
       },
       borderRadius: {
         lg: "var(--radius-lg, 12px)",

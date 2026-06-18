@@ -24,7 +24,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-grayBorder/80 backdrop-blur-md bg-opacity-95">
+    <header className="sticky top-0 z-50 bg-background/85 border-b border-grayBorder/40 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
@@ -33,11 +33,11 @@ export default function Navbar() {
             <div className="w-9 h-9 rounded-md bg-accent-green flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105">
               <span className="font-extrabold text-lg leading-none">JP</span>
             </div>
-            <span className="text-xl font-extrabold text-accent-teal tracking-tight">
+            <span className="text-xl font-extrabold text-slateText-primary tracking-tight">
               Job<span className="text-accent-green">Pickers</span>
             </span>
           </Link>
-
+  
           {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
@@ -50,7 +50,7 @@ export default function Navbar() {
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-md font-semibold text-sm transition-colors ${
                     active
                       ? 'bg-accent-green/10 text-accent-green'
-                      : 'text-slateText-secondary hover:text-slateText-primary hover:bg-grayBg'
+                      : 'text-slateText-secondary hover:text-slateText-primary hover:bg-grayBg/50'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -59,7 +59,7 @@ export default function Navbar() {
               );
             })}
           </nav>
-
+  
           {/* Desktop CTA actions */}
           <div className="hidden md:flex items-center gap-4">
             <Link 
@@ -76,21 +76,21 @@ export default function Navbar() {
               Employers
             </Link>
           </div>
-
+  
           {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-md text-slateText-secondary hover:text-slateText-primary hover:bg-grayBg transition-colors"
+            className="md:hidden p-2 rounded-md text-slateText-secondary hover:text-slateText-primary hover:bg-grayBg/50 transition-colors"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
-
+  
       {/* Mobile Navigation Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-grayBorder bg-white px-4 py-3 flex flex-col gap-2 shadow-inner">
+        <div className="md:hidden border-t border-grayBorder/40 bg-background/95 backdrop-blur-md px-4 py-3 flex flex-col gap-2 shadow-xl">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const active = isActive(link.href);
@@ -102,7 +102,7 @@ export default function Navbar() {
                 className={`flex items-center gap-3 px-4 py-3 rounded-md font-semibold text-base transition-colors ${
                   active
                     ? 'bg-accent-green/10 text-accent-green'
-                    : 'text-slateText-secondary hover:text-slateText-primary hover:bg-grayBg'
+                    : 'text-slateText-secondary hover:text-slateText-primary hover:bg-grayBg/50'
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -110,7 +110,7 @@ export default function Navbar() {
               </Link>
             );
           })}
-          <div className="h-px bg-grayBorder my-2" />
+          <div className="h-px bg-grayBorder/40 my-2" />
           <Link
             href="/admin"
             onClick={() => setMobileMenuOpen(false)}

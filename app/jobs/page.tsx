@@ -163,7 +163,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       
       {/* Top Search bar wrapper */}
-      <div className="bg-white border border-grayBorder rounded-lg p-4 shadow-sm mb-6">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-4 shadow-sm mb-6">
         <form action="/jobs" method="GET" className="flex flex-col md:flex-row gap-4 items-center">
           <div className="w-full md:flex-grow">
             <label className="block text-xs font-bold text-slateText-muted uppercase tracking-wider mb-1.5">What</label>
@@ -172,7 +172,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
               name="keyword"
               placeholder="Job title, key terms, company..."
               defaultValue={keyword}
-              className="w-full bg-grayBg border border-grayBorder rounded px-3 py-2 text-sm font-semibold outline-none focus:border-accent-green"
+              className="w-full bg-grayBg/60 border border-grayBorder/40 rounded px-3 py-2 text-sm font-semibold outline-none focus:border-accent-green text-slateText-primary"
             />
           </div>
           <div className="w-full md:flex-grow">
@@ -199,7 +199,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
         
         {/* Sidebar Filters Column (Details tag for Mobile collapsible toggle) */}
         <aside className="lg:col-span-1 h-fit lg:sticky lg:top-20">
-          <details className="bg-white border border-grayBorder rounded-lg p-4 lg:p-5 w-full group" open>
+          <details className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-4 lg:p-5 w-full group" open>
             <summary className="lg:hidden list-none cursor-pointer flex items-center justify-between font-extrabold text-sm text-slateText-primary select-none">
               <span className="flex items-center gap-1.5">
                 <Sliders className="w-4 h-4 text-accent-green" />
@@ -211,7 +211,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
             </summary>
 
             <div className="mt-4 lg:mt-0 space-y-5">
-              <div className="flex justify-between items-center border-b border-grayBorder pb-3 hidden lg:flex">
+              <div className="flex justify-between items-center border-b border-grayBorder/40 pb-3 hidden lg:flex">
                 <h2 className="font-extrabold text-sm text-slateText-primary flex items-center gap-1.5">
                   <Sliders className="w-4 h-4 text-accent-green" />
                   <span>Job Filters</span>
@@ -362,7 +362,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
         {/* Listings column */}
         <main className="lg:col-span-3 flex flex-col gap-4">
-          <div className="flex items-center justify-between border-b border-grayBorder pb-3">
+          <div className="flex items-center justify-between border-b border-grayBorder/40 pb-3">
             <h1 className="text-lg font-extrabold text-slateText-primary">
               Search Results ({totalJobs})
             </h1>
@@ -378,7 +378,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
               ))}
             </div>
           ) : (
-            <div className="bg-white border border-grayBorder rounded-lg p-12 text-center flex flex-col items-center justify-center shadow-sm">
+            <div className="bg-grayBg/40 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-12 text-center flex flex-col items-center justify-center shadow-sm">
               <AlertCircle className="w-10 h-10 text-slateText-muted/60 mb-3" />
               <h3 className="font-bold text-slateText-primary text-base">No Matching Jobs</h3>
               <p className="text-xs text-slateText-muted mt-1.5 max-w-sm">
@@ -389,10 +389,10 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
 
           {/* Pagination Navigation Elements */}
           {totalPages > 1 && (
-            <nav className="flex justify-between items-center border-t border-grayBorder pt-4 mt-6 text-xs font-bold text-slateText-secondary">
+            <nav className="flex justify-between items-center border-t border-grayBorder/40 pt-4 mt-6 text-xs font-bold text-slateText-secondary">
               <Link
                 href={page > 1 ? getPageUrl(page - 1) : '#'}
-                className={`px-4 py-2 border border-grayBorder rounded bg-white hover:bg-grayBg transition-colors ${
+                className={`px-4 py-2 border border-grayBorder/40 rounded bg-grayBg/50 hover:bg-grayBg/90 transition-colors ${
                   page <= 1 ? 'opacity-40 pointer-events-none' : ''
                 }`}
               >
@@ -403,7 +403,7 @@ export default async function JobsPage({ searchParams }: JobsPageProps) {
               </span>
               <Link
                 href={page < totalPages ? getPageUrl(page + 1) : '#'}
-                className={`px-4 py-2 border border-grayBorder rounded bg-white hover:bg-grayBg transition-colors ${
+                className={`px-4 py-2 border border-grayBorder/40 rounded bg-grayBg/50 hover:bg-grayBg/90 transition-colors ${
                   page >= totalPages ? 'opacity-40 pointer-events-none' : ''
                 }`}
               >

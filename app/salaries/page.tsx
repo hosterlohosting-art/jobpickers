@@ -192,7 +192,7 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       
       {/* 1. Page Header & Search */}
-      <div className="bg-white border border-grayBorder rounded-lg p-6 md:p-8 shadow-sm mb-8">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-6 md:p-8 shadow-sm mb-8">
         <div className="max-w-3xl">
           <h1 className="text-2xl md:text-3xl font-extrabold text-slateText-primary leading-tight flex items-center gap-2">
             <Coins className="w-8 h-8 text-accent-green" />
@@ -210,7 +210,7 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
                 name="search"
                 defaultValue={search}
                 placeholder="Search reviews by company name, role, or keywords..."
-                className="w-full bg-grayBg border border-grayBorder rounded pl-10 pr-3 py-3 text-xs font-semibold outline-none focus:border-accent-green text-slateText-primary"
+                className="w-full bg-grayBg/60 border border-grayBorder/40 rounded pl-10 pr-3 py-3 text-xs font-semibold outline-none focus:border-accent-green text-slateText-primary"
               />
               <Search className="w-4 h-4 text-slateText-muted absolute left-3.5 top-3.5" />
             </div>
@@ -226,17 +226,17 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
 
       {/* 2. Portal Statistics Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white border border-grayBorder p-5 rounded-lg shadow-sm flex flex-col gap-1">
+        <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 p-5 rounded-lg shadow-sm flex flex-col gap-1">
           <span className="text-[10px] text-slateText-muted font-bold uppercase tracking-wider">Salary Data Available</span>
           <span className="text-xl font-extrabold text-slateText-primary">{salaryJobs.length} listings</span>
           <span className="text-[10px] text-slateText-muted mt-1">From {totalPublishedJobs} active job posts</span>
         </div>
-        <div className="bg-white border border-grayBorder p-5 rounded-lg shadow-sm flex flex-col gap-1">
+        <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 p-5 rounded-lg shadow-sm flex flex-col gap-1">
           <span className="text-[10px] text-slateText-muted font-bold uppercase tracking-wider">Average Annual Pay</span>
           <span className="text-xl font-extrabold text-accent-green">${(overallAvgSalary / 1000).toFixed(1)}k</span>
           <span className="text-[10px] text-slateText-muted mt-1">Cross-industry median range</span>
         </div>
-        <div className="bg-white border border-grayBorder p-5 rounded-lg shadow-sm flex flex-col gap-1">
+        <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 p-5 rounded-lg shadow-sm flex flex-col gap-1">
           <span className="text-[10px] text-slateText-muted font-bold uppercase tracking-wider">Top Employer</span>
           <div className="flex items-center gap-1.5 mt-0.5">
             <span className="text-xl font-extrabold text-slateText-primary truncate max-w-[120px]">{topCompany.name}</span>
@@ -247,7 +247,7 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
           </div>
           <span className="text-[10px] text-slateText-muted mt-0.5">Based on employee reviews</span>
         </div>
-        <div className="bg-white border border-grayBorder p-5 rounded-lg shadow-sm flex flex-col gap-1">
+        <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 p-5 rounded-lg shadow-sm flex flex-col gap-1">
           <span className="text-[10px] text-slateText-muted font-bold uppercase tracking-wider">Verified Reviews</span>
           <span className="text-xl font-extrabold text-slateText-primary">{totalReviewCount} reviews</span>
           <span className="text-[10px] text-slateText-muted mt-1">100% anonymous & validated</span>
@@ -278,7 +278,7 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
                 const avgPct = hasData ? Math.max(0, Math.min(100, ((stats.avg - minLimit) / rangeSpan) * 100)) : 0;
 
                 return (
-                  <div key={cat} className="bg-white border border-grayBorder p-5 rounded-lg shadow-sm flex flex-col justify-between hover:border-accent-green/35 transition-colors">
+                  <div key={cat} className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 p-5 rounded-lg shadow-sm flex flex-col justify-between hover:border-accent-green/45 hover:shadow-lg hover:shadow-accent-green/5 transition-all duration-300">
                     <div>
                       <div className="flex justify-between items-start">
                         <span className="font-extrabold text-sm text-slateText-primary">{cat}</span>
@@ -302,12 +302,12 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
                             <div className="absolute left-0 right-0 h-1.5 bg-grayBg border border-grayBorder/40 rounded-full" />
                             {/* Min-Max green range fill */}
                             <div 
-                              className="absolute h-1.5 bg-accent-green/45 rounded-full"
+                              className="absolute h-1.5 bg-accent-green/60 shadow shadow-accent-green/20 rounded-full"
                               style={{ left: `${minPct}%`, right: `${100 - maxPct}%` }}
                             />
                             {/* Average Salary Marker circle */}
                             <div 
-                              className="absolute w-3 h-3 bg-white border-2 border-accent-green rounded-full shadow-sm -mt-0.5 transform -translate-x-1/2 cursor-pointer"
+                              className="absolute w-3.5 h-3.5 bg-white border-2 border-accent-green rounded-full shadow-md shadow-accent-green/30 -mt-1 transform -translate-x-1/2 cursor-pointer"
                               style={{ left: `${avgPct}%` }}
                               title={`Average: $${Math.round(stats.avg).toLocaleString()}`}
                             />
@@ -355,17 +355,17 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
             </div>
 
             {reviews.length === 0 ? (
-              <div className="bg-white border border-grayBorder p-8 rounded-lg shadow-sm text-center">
+              <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 p-8 rounded-lg shadow-sm text-center">
                 <AlertCircle className="w-10 h-10 text-slateText-muted mx-auto mb-3" />
                 <h3 className="text-sm font-extrabold text-slateText-primary">No employee reviews found</h3>
-                <p className="text-xs text-slateText-muted mt-1 max-w-xs mx-auto">
+                <p className="text-xs text-slateText-muted mt-1.5 max-w-xs mx-auto">
                   We couldn't locate any ratings matching "{search}". Try searching for another company.
                 </p>
               </div>
             ) : (
               <div className="flex flex-col gap-4">
                 {reviews.map(review => (
-                  <div key={review.id} className="bg-white border border-grayBorder rounded-lg p-5 shadow-sm space-y-4">
+                  <div key={review.id} className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 shadow-sm space-y-4">
                     
                     {/* Header: Company, rating, role */}
                     <div className="flex justify-between items-start gap-4 flex-wrap">
@@ -402,18 +402,18 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
 
                     {/* Review text blocks */}
                     <div className="space-y-2.5 text-xs text-slateText-secondary pt-3 border-t border-grayBorder/40">
-                      <div className="bg-emerald-50/50 border border-emerald-100 rounded-md p-3">
-                        <span className="font-extrabold text-[10px] text-emerald-700 uppercase tracking-wide block mb-1">Pros</span>
+                      <div className="bg-emerald-950/20 border border-emerald-500/20 rounded-md p-3">
+                        <span className="font-extrabold text-[10px] text-emerald-400 uppercase tracking-wide block mb-1">Pros</span>
                         <p className="leading-relaxed font-medium">{review.pros}</p>
                       </div>
 
-                      <div className="bg-rose-50/50 border border-rose-100 rounded-md p-3">
-                        <span className="font-extrabold text-[10px] text-rose-700 uppercase tracking-wide block mb-1">Cons</span>
+                      <div className="bg-rose-950/20 border border-rose-500/20 rounded-md p-3">
+                        <span className="font-extrabold text-[10px] text-rose-400 uppercase tracking-wide block mb-1">Cons</span>
                         <p className="leading-relaxed font-medium">{review.cons}</p>
                       </div>
                       
                       {review.adviceToManagement && (
-                        <div className="bg-grayBg border border-grayBorder p-3 rounded-md italic">
+                        <div className="bg-grayBg/60 border border-grayBorder/40 p-3 rounded-md italic">
                           <span className="font-bold text-[10px] text-slateText-primary not-italic block mb-0.5">Advice to Management:</span>
                           "{review.adviceToManagement}"
                         </div>
@@ -431,8 +431,8 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
           
           {/* C. Searched Companies (only shows if search parameter active) */}
           {search.trim() && searchedCompanies.length > 0 && (
-            <div className="bg-white border border-grayBorder rounded-lg p-5 shadow-sm space-y-4">
-              <h3 className="text-xs font-bold text-slateText-primary uppercase tracking-wider border-b border-grayBorder/60 pb-2 flex items-center gap-1">
+            <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 shadow-sm space-y-4">
+              <h3 className="text-xs font-bold text-slateText-primary uppercase tracking-wider border-b border-grayBorder/40 pb-2 flex items-center gap-1">
                 <Building2 className="w-4 h-4 text-accent-green" />
                 <span>Hiring Companies</span>
               </h3>
@@ -475,8 +475,8 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
           )}
 
           {/* D. High-Paying Job listings */}
-          <div className="bg-white border border-grayBorder rounded-lg p-5 shadow-sm space-y-4">
-            <h3 className="text-xs font-bold text-slateText-primary uppercase tracking-wider border-b border-grayBorder/60 pb-2 flex items-center gap-1">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 shadow-sm space-y-4">
+            <h3 className="text-xs font-bold text-slateText-primary uppercase tracking-wider border-b border-grayBorder/40 pb-2 flex items-center gap-1">
               <Sparkles className="w-4 h-4 text-accent-green" />
               <span>High-Paying Opportunities</span>
             </h3>
@@ -486,7 +486,7 @@ export default async function SalariesPage({ searchParams }: SalariesPageProps) 
             ) : (
               <div className="flex flex-col gap-4">
                 {topPayingJobs.map(job => (
-                  <div key={job.id} className="flex gap-3 items-start border-b border-grayBorder/50 pb-3 last:border-b-0 last:pb-0">
+                  <div key={job.id} className="flex gap-3 items-start border-b border-grayBorder/40 pb-3 last:border-b-0 last:pb-0">
                     <CompanyLogo logo={job.company.logo} name={job.company.name} className="w-9 h-9 mt-0.5" textClassName="text-xs" />
                     <div className="flex-grow min-w-0">
                       <Link 

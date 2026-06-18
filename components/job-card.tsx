@@ -74,8 +74,8 @@ export default function JobCard({ job, isSaved = false, onSaveToggle, onApplyCli
   };
 
   return (
-    <div className={`bg-white border rounded-lg p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
-      job.featured ? 'border-accent-green/50 bg-accent-green/[0.02]' : 'border-grayBorder hover:border-accent-green/30'
+    <div className={`bg-grayBg/50 backdrop-blur-sm border rounded-lg p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-accent-green/5 ${
+      job.featured ? 'border-accent-green/60 bg-accent-green/[0.04] shadow-sm shadow-accent-green/5' : 'border-grayBorder/40 hover:border-accent-green/45'
     }`}>
       <div className="flex gap-4">
         
@@ -96,7 +96,7 @@ export default function JobCard({ job, isSaved = false, onSaveToggle, onApplyCli
                 </h3>
               </Link>
               <div className="flex items-center gap-2 mt-1">
-                <Link href={`/companies/${job.company.slug}`} className="text-sm font-semibold text-slateText-secondary hover:text-accent-teal hover:underline">
+                <Link href={`/companies/${job.company.slug}`} className="text-sm font-semibold text-slateText-secondary hover:text-accent-green hover:underline">
                   {job.company.name}
                 </Link>
                 
@@ -114,7 +114,7 @@ export default function JobCard({ job, isSaved = false, onSaveToggle, onApplyCli
               className={`p-1.5 rounded-full border transition-colors ${
                 saved 
                   ? 'border-accent-green/30 bg-accent-green/10 text-accent-green' 
-                  : 'border-grayBorder text-slateText-muted hover:text-slateText-primary hover:bg-grayBg'
+                  : 'border-grayBorder/40 text-slateText-muted hover:text-slateText-primary hover:bg-grayBg/50'
               }`}
               aria-label={saved ? 'Unsave Job' : 'Save Job'}
             >
@@ -143,7 +143,7 @@ export default function JobCard({ job, isSaved = false, onSaveToggle, onApplyCli
           </div>
 
           {/* Card Footer: Timestamp & Apply redirect */}
-          <div className="border-t border-grayBorder/60 mt-4 pt-3 flex items-center justify-between gap-4 text-xs text-slateText-muted">
+          <div className="border-t border-grayBorder/40 mt-4 pt-3 flex items-center justify-between gap-4 text-xs text-slateText-muted">
             <span>
               Posted {getRelativeTime(job.postedAt)} &bull; Source: <span className="font-semibold text-slateText-secondary">{job.sourceName}</span>
             </span>
