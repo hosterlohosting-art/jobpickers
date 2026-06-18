@@ -43,12 +43,11 @@ export default function Footer() {
           {/* Column 1: Brand description */}
           <div className="flex flex-col gap-4">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded bg-accent-green flex items-center justify-center text-white font-extrabold text-sm">
-                JP
-              </div>
-              <span className="text-lg font-bold text-white tracking-tight">
-                Job<span className="text-accent-green">Pickers</span>
-              </span>
+              <img 
+                src="/logo_light.png" 
+                alt="JobPickers Logo" 
+                className="h-8 w-auto" 
+              />
             </Link>
             <p className="text-sm text-white/70 leading-relaxed">
               JobPickers is a clean, trustworthy career board aggregator collecting fresh software, marketing, finance, and product positions daily. Highly optimized for job seekers and SEO.

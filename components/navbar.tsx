@@ -30,12 +30,11 @@ export default function Navbar() {
           
           {/* Logo Brand Area */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-md bg-accent-green flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105">
-              <span className="font-extrabold text-lg leading-none">JP</span>
-            </div>
-            <span className="text-xl font-extrabold text-slateText-primary tracking-tight">
-              Job<span className="text-accent-green">Pickers</span>
-            </span>
+            <img 
+              src="/logo_light.png" 
+              alt="JobPickers Logo" 
+              className="h-8 md:h-9 w-auto transition-transform group-hover:scale-[1.02]" 
+            />
           </Link>
   
           {/* Desktop Navigation Links */}
