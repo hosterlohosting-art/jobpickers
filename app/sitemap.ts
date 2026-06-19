@@ -1,6 +1,9 @@
 import { MetadataRoute } from 'next';
 import { prisma } from '../lib/prisma';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Cache sitemap on server for 1 hour
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://jobpickers.com';
   const cleanSiteUrl = siteUrl.endsWith('/') ? siteUrl.slice(0, -1) : siteUrl;

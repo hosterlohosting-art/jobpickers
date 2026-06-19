@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: 'JobPickers | Find Your Next Career Opportunity',
   description: 'Aggregated software developer, product manager, and marketing jobs. Post listings, create professional resumes, and optimize your job search.',
   keywords: 'jobs, career search, hire developer, coding careers, remote work',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://jobpickers.com'),
   openGraph: {
     title: 'JobPickers | Find Your Next Career Opportunity',
     description: 'Clean, trustworthy job search aggregator collecting software, design, and marketing remote jobs daily.',
@@ -33,7 +33,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const headersList = headers();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://jobpickers.com';
   const canonicalUrl = headersList.get('x-url') || siteUrl;
 
   let footerAdCode = '';
