@@ -81,7 +81,7 @@ export default async function BlogIndexPage() {
         {/* Topic Pills */}
         <div className="flex flex-wrap justify-center gap-2 mt-5">
           {TOPICS.map(topic => (
-            <span key={topic} className="bg-grayBg border border-grayBorder text-slateText-secondary text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">
+            <span key={topic} className="bg-grayBg/60 border border-grayBorder/40 text-slateText-secondary text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide">
               {topic}
             </span>
           ))}
@@ -95,7 +95,7 @@ export default async function BlogIndexPage() {
       {heroPost && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
           {/* Main hero post */}
-          <article className="lg:col-span-2 bg-white border border-grayBorder rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
+          <article className="lg:col-span-2 bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
             {heroPost.featuredImage && (
               <div className="h-56 overflow-hidden">
                 <img src={heroPost.featuredImage} alt={heroPost.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
@@ -125,7 +125,7 @@ export default async function BlogIndexPage() {
           {/* Side featured posts */}
           <div className="flex flex-col gap-6">
             {(sideFeatured.length > 0 ? sideFeatured : posts.slice(1, 3)).map((post) => (
-              <article key={post.id} className="bg-white border border-grayBorder rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col flex-grow group">
+              <article key={post.id} className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col flex-grow group">
                 <div className="inline-block bg-accent-green/10 text-accent-green text-[10px] font-extrabold uppercase tracking-widest px-2 py-0.5 rounded mb-2 self-start">
                   Must Read
                 </div>
@@ -153,7 +153,7 @@ export default async function BlogIndexPage() {
 
         {/* ── ALL ARTICLES GRID ── */}
         <main className="lg:col-span-2">
-          <div className="flex items-center justify-between border-b border-grayBorder pb-3 mb-6">
+          <div className="flex items-center justify-between border-b border-grayBorder/40 pb-3 mb-6">
             <h2 className="text-sm font-extrabold text-slateText-primary uppercase tracking-wider flex items-center gap-1.5">
               <TrendingUp className="w-4 h-4 text-accent-green" />
               All Career Guides ({posts.length})
@@ -163,9 +163,9 @@ export default async function BlogIndexPage() {
           {posts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {regularPosts.map((post) => (
-                <article key={post.id} className="bg-white border border-grayBorder rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col group">
+                <article key={post.id} className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col group">
                   {post.featuredImage && (
-                    <div className="h-40 overflow-hidden border-b border-grayBorder">
+                    <div className="h-40 overflow-hidden border-b border-grayBorder/40">
                       <img src={post.featuredImage} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                     </div>
                   )}
@@ -185,7 +185,7 @@ export default async function BlogIndexPage() {
                     <p className="text-xs text-slateText-secondary mt-2 line-clamp-3 leading-relaxed flex-grow">
                       {post.excerpt}
                     </p>
-                    <div className="mt-4 pt-3 border-t border-grayBorder/60 flex items-center justify-between text-xs font-semibold">
+                    <div className="mt-4 pt-3 border-t border-grayBorder/40 flex items-center justify-between text-xs font-semibold">
                       <span className="text-slateText-muted">By {post.author.name}</span>
                       <Link href={`/blog/${post.slug}`} className="text-accent-green hover:text-accent-greenHover flex items-center gap-1 font-bold">
                         Read Article <ArrowRight className="w-3.5 h-3.5" />
@@ -196,13 +196,13 @@ export default async function BlogIndexPage() {
               ))}
 
               {posts.length === 0 && (
-                <div className="col-span-2 bg-white border border-grayBorder rounded-xl p-10 text-center text-slateText-muted text-sm font-semibold">
+                <div className="col-span-2 bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-xl p-10 text-center text-slateText-muted text-sm font-semibold">
                   No articles yet — check back soon!
                 </div>
               )}
             </div>
           ) : (
-            <div className="bg-white border border-grayBorder rounded-xl p-10 text-center text-slateText-muted text-sm font-semibold">
+            <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-xl p-10 text-center text-slateText-muted text-sm font-semibold">
               Loading career guides...
             </div>
           )}
@@ -212,15 +212,15 @@ export default async function BlogIndexPage() {
         <aside className="lg:col-span-1 space-y-6">
 
           {/* Topics */}
-          <div className="bg-white border border-grayBorder rounded-xl p-5 shadow-sm">
-            <h2 className="text-xs font-extrabold text-slateText-primary uppercase tracking-wider border-b border-grayBorder pb-2 mb-3 flex items-center gap-1.5">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-xl p-5 shadow-sm">
+            <h2 className="text-xs font-extrabold text-slateText-primary uppercase tracking-wider border-b border-grayBorder/40 pb-2 mb-3 flex items-center gap-1.5">
               <Sparkles className="w-4 h-4 text-accent-green" />
               Browse by Topic
             </h2>
             <div className="flex flex-wrap gap-2">
               {TOPICS.map(topic => (
                 <Link key={topic} href="/blog"
-                  className="bg-grayBg border border-grayBorder text-slateText-secondary hover:border-accent-green/50 hover:text-accent-green text-[10px] font-bold px-2.5 py-1 rounded transition-colors">
+                  className="bg-grayBg/60 border border-grayBorder/40 text-slateText-secondary hover:border-accent-green/50 hover:text-accent-green text-[10px] font-bold px-2.5 py-1 rounded transition-colors">
                   {topic}
                 </Link>
               ))}
@@ -239,14 +239,14 @@ export default async function BlogIndexPage() {
           </div>
 
           {/* Popular posts */}
-          <div className="bg-white border border-grayBorder rounded-xl p-5 shadow-sm">
-            <h2 className="text-xs font-extrabold text-slateText-primary uppercase tracking-wider border-b border-grayBorder pb-2 mb-3">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-xl p-5 shadow-sm">
+            <h2 className="text-xs font-extrabold text-slateText-primary uppercase tracking-wider border-b border-grayBorder/40 pb-2 mb-3">
               Most Popular
             </h2>
             <div className="space-y-3">
               {posts.slice(0, 6).map((post, i) => (
                 <Link key={post.id} href={`/blog/${post.slug}`} className="flex items-start gap-2.5 group">
-                  <span className="text-xl font-extrabold text-grayBorder group-hover:text-accent-green/30 transition-colors flex-shrink-0 leading-tight">
+                  <span className="text-xl font-extrabold text-slateText-muted/40 group-hover:text-accent-green/30 transition-colors flex-shrink-0 leading-tight">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <h3 className="text-xs font-bold text-slateText-primary group-hover:text-accent-green transition-colors leading-snug line-clamp-2">

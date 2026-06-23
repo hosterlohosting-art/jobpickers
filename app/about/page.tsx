@@ -58,7 +58,7 @@ export default function AboutPage() {
     <div className="max-w-5xl mx-auto px-4 py-12 space-y-10">
 
       {/* Hero Header */}
-      <div className="bg-white border border-grayBorder rounded-lg p-8 md:p-12 shadow-sm text-center">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 md:p-12 shadow-sm text-center">
         <div className="w-14 h-14 rounded-xl bg-accent-green/10 flex items-center justify-center text-accent-green mx-auto mb-4">
           <Heart className="w-7 h-7" />
         </div>
@@ -73,7 +73,7 @@ export default function AboutPage() {
           <Link href="/jobs" className="bg-accent-green hover:bg-accent-greenHover text-white font-bold px-6 py-2.5 rounded text-sm transition-colors shadow-sm">
             Browse Jobs
           </Link>
-          <Link href="/contact" className="border border-grayBorder text-slateText-primary hover:border-accent-green font-bold px-6 py-2.5 rounded text-sm transition-colors">
+          <Link href="/contact" className="border border-grayBorder/40 text-slateText-primary hover:border-accent-green font-bold px-6 py-2.5 rounded text-sm transition-colors">
             Get in Touch
           </Link>
         </div>
@@ -82,7 +82,7 @@ export default function AboutPage() {
       {/* Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {stats.map((stat) => (
-          <div key={stat.label} className="bg-white border border-grayBorder rounded-lg p-5 text-center shadow-sm">
+          <div key={stat.label} className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 text-center shadow-sm">
             <div className="text-2xl md:text-3xl font-extrabold text-accent-green">{stat.value}</div>
             <div className="text-xs font-bold text-slateText-muted uppercase tracking-wider mt-1">{stat.label}</div>
           </div>
@@ -90,7 +90,7 @@ export default function AboutPage() {
       </div>
 
       {/* Our Story */}
-      <div className="bg-white border border-grayBorder rounded-lg p-8 shadow-sm">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 shadow-sm">
         <h2 className="text-lg font-extrabold text-slateText-primary mb-4 flex items-center gap-2">
           <Target className="w-5 h-5 text-accent-green" />
           Our Story
@@ -120,7 +120,7 @@ export default function AboutPage() {
       </div>
 
       {/* How It Works */}
-      <div className="bg-white border border-grayBorder rounded-lg p-8 shadow-sm">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 shadow-sm">
         <h2 className="text-lg font-extrabold text-slateText-primary mb-6">How JobPickers Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {howItWorks.map((item) => (
@@ -138,7 +138,7 @@ export default function AboutPage() {
       </div>
 
       {/* Core Values */}
-      <div className="bg-white border border-grayBorder rounded-lg p-8 shadow-sm">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 shadow-sm">
         <h2 className="text-lg font-extrabold text-slateText-primary mb-6">Our Core Values</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {values.map((v) => (
@@ -156,7 +156,7 @@ export default function AboutPage() {
       </div>
 
       {/* Team */}
-      <div className="bg-white border border-grayBorder rounded-lg p-8 shadow-sm">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 shadow-sm">
         <h2 className="text-lg font-extrabold text-slateText-primary mb-6 flex items-center gap-2">
           <Users className="w-5 h-5 text-accent-green" />
           The Team
@@ -178,7 +178,7 @@ export default function AboutPage() {
       </div>
 
       {/* Trust Signals */}
-      <div className="bg-white border border-grayBorder rounded-lg p-8 shadow-sm">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 shadow-sm">
         <h2 className="text-lg font-extrabold text-slateText-primary mb-4 flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-accent-green" />
           Trust & Compliance

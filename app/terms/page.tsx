@@ -9,9 +9,9 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <div className="bg-white border border-grayBorder rounded-lg p-8 shadow-sm">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 shadow-sm">
         
-        <div className="flex items-center gap-3 border-b border-grayBorder pb-4 mb-6">
+        <div className="flex items-center gap-3 border-b border-grayBorder/40 pb-4 mb-6">
           <Scale className="w-8 h-8 text-accent-green" />
           <h1 className="text-xl md:text-2xl font-extrabold text-slateText-primary">Terms & Conditions</h1>
         </div>
@@ -55,7 +55,7 @@ export default function TermsPage() {
             </p>
           </div>
 
-          <div className="pt-4 border-t border-grayBorder text-xs text-slateText-muted">
+          <div className="pt-4 border-t border-grayBorder/40 text-xs text-slateText-muted">
             If you have questions regarding these conditions, please <Link href="/contact" className="text-accent-green hover:underline">Contact Us</Link>.
           </div>
         </div>

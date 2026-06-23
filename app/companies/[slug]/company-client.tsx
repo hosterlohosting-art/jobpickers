@@ -139,7 +139,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
     <div className="space-y-8">
       
       {/* Hero Header Card */}
-      <div className="bg-white border border-grayBorder rounded-lg p-6 md:p-8 shadow-sm">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-6 md:p-8 shadow-sm">
         <div className="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
           <div className="flex items-center gap-4">
             <CompanyLogo logo={company.logo} name={company.name} className="w-16 h-16" textClassName="text-2xl" />
@@ -173,7 +173,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
         </div>
 
         {/* Tab Links Row */}
-        <div className="flex border-t border-grayBorder mt-6 pt-4 gap-6 text-sm font-bold text-slateText-muted overflow-x-auto">
+        <div className="flex border-t border-grayBorder/40 mt-6 pt-4 gap-6 text-sm font-bold text-slateText-muted overflow-x-auto">
           <button
             onClick={() => setActiveTab('overview')}
             className={`pb-2 outline-none transition-all border-b-2 text-xs md:text-sm ${
@@ -188,7 +188,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
               activeTab === 'reviews' ? 'border-accent-green text-accent-green' : 'border-transparent hover:text-slateText-primary'
             }`}
           >
-            Reviews <span className="text-[10px] bg-grayBorder px-1.5 py-0.5 rounded text-slateText-secondary">{reviewsCount}</span>
+            Reviews <span className="text-[10px] bg-grayBg/90 border border-grayBorder/40 px-1.5 py-0.5 rounded text-slateText-secondary">{reviewsCount}</span>
           </button>
           <button
             onClick={() => setActiveTab('salaries')}
@@ -196,7 +196,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
               activeTab === 'salaries' ? 'border-accent-green text-accent-green' : 'border-transparent hover:text-slateText-primary'
             }`}
           >
-            Salaries <span className="text-[10px] bg-grayBorder px-1.5 py-0.5 rounded text-slateText-secondary">{salaryJobs.length}</span>
+            Salaries <span className="text-[10px] bg-grayBg/90 border border-grayBorder/40 px-1.5 py-0.5 rounded text-slateText-secondary">{salaryJobs.length}</span>
           </button>
           <button
             onClick={() => setActiveTab('careers')}
@@ -204,7 +204,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
               activeTab === 'careers' ? 'border-accent-green text-accent-green' : 'border-transparent hover:text-slateText-primary'
             }`}
           >
-            Careers <span className="text-[10px] bg-grayBorder px-1.5 py-0.5 rounded text-slateText-secondary">{jobs.length}</span>
+            Careers <span className="text-[10px] bg-grayBg/90 border border-grayBorder/40 px-1.5 py-0.5 rounded text-slateText-secondary">{jobs.length}</span>
           </button>
         </div>
       </div>
@@ -218,8 +218,8 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
           {/* 1. OVERVIEW TAB */}
           {activeTab === 'overview' && (
             <div className="space-y-6">
-              <div className="bg-white border border-grayBorder rounded-lg p-6 shadow-sm">
-                <h2 className="text-sm font-extrabold text-slateText-primary border-b border-grayBorder pb-2.5 mb-4">
+              <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-6 shadow-sm">
+                <h2 className="text-sm font-extrabold text-slateText-primary border-b border-grayBorder/40 pb-2.5 mb-4">
                   About {company.name}
                 </h2>
                 <p className="text-xs text-slateText-secondary leading-relaxed whitespace-pre-line">
@@ -228,22 +228,22 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
               </div>
 
               {/* Quick Summary stats card */}
-              <div className="bg-white border border-grayBorder rounded-lg p-6 shadow-sm">
-                <h2 className="text-sm font-extrabold text-slateText-primary border-b border-grayBorder pb-2.5 mb-4">
+              <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-6 shadow-sm">
+                <h2 className="text-sm font-extrabold text-slateText-primary border-b border-grayBorder/40 pb-2.5 mb-4">
                   Employee Consensus Summary
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                  <div className="flex flex-col items-center justify-center p-4 border border-grayBorder rounded bg-grayBg/20">
+                  <div className="flex flex-col items-center justify-center p-4 border border-grayBorder/40 rounded bg-grayBg/20">
                     <span className="text-3xl font-black text-slateText-primary">{avgRating}</span>
                     <div className="flex items-center gap-0.5 text-amber-500 mt-1">
                       {[1,2,3,4,5].map(star => (
-                        <Star key={star} className={`w-3.5 h-3.5 ${star <= Math.round(Number(avgRating)) ? 'fill-amber-500 text-amber-500' : 'text-grayBorder'}`} />
+                        <Star key={star} className={`w-3.5 h-3.5 ${star <= Math.round(Number(avgRating)) ? 'fill-amber-500 text-amber-500' : 'text-slateText-muted/40'}`} />
                       ))}
                     </div>
                     <span className="text-[10px] text-slateText-muted mt-2 font-bold uppercase tracking-wider">Overall score</span>
                   </div>
 
-                  <div className="flex flex-col items-center justify-center p-4 border border-grayBorder rounded bg-grayBg/20">
+                  <div className="flex flex-col items-center justify-center p-4 border border-grayBorder/40 rounded bg-grayBg/20">
                     <span className="text-3xl font-black text-accent-green">{recommendPercent}%</span>
                     <span className="text-xs font-bold text-slateText-secondary mt-1">Recommend to a Friend</span>
                     <span className="text-[10px] text-slateText-muted mt-1 font-bold uppercase tracking-wider">Based on {reviewsCount} reviews</span>
@@ -258,7 +258,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
             <div className="space-y-6">
               
               {/* Ratings Aggregation header */}
-              <div className="bg-white border border-grayBorder rounded-lg p-6 shadow-sm">
+              <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-6 shadow-sm">
                 <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center">
                   <div>
                     <h2 className="text-sm font-extrabold text-slateText-primary flex items-center gap-1.5">
@@ -276,13 +276,13 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center mt-6 pt-6 border-t border-grayBorder">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center mt-6 pt-6 border-t border-grayBorder/40">
                   {/* Rating Average */}
-                  <div className="text-center md:border-r border-grayBorder/60 py-2">
+                  <div className="text-center md:border-r border-grayBorder/40 py-2">
                     <span className="text-4xl font-black text-slateText-primary block">{avgRating}</span>
                     <div className="flex justify-center items-center gap-0.5 text-amber-500 mt-1">
                       {[1,2,3,4,5].map(star => (
-                        <Star key={star} className={`w-4 h-4 ${star <= Math.round(Number(avgRating)) ? 'fill-amber-500 text-amber-500' : 'text-grayBorder'}`} />
+                        <Star key={star} className={`w-4 h-4 ${star <= Math.round(Number(avgRating)) ? 'fill-amber-500 text-amber-500' : 'text-slateText-muted/40'}`} />
                       ))}
                     </div>
                     <span className="text-[10px] text-slateText-muted mt-2 block font-extrabold uppercase">Average Score</span>
@@ -296,7 +296,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                       return (
                         <div key={stars} className="flex items-center gap-2">
                           <span className="w-10 text-right">{stars} Star</span>
-                          <div className="flex-1 bg-grayBg h-2.5 rounded overflow-hidden border border-grayBorder/30">
+                          <div className="flex-1 bg-grayBg/60 h-2.5 rounded overflow-hidden border border-grayBorder/40">
                             <div className="bg-accent-green h-full rounded transition-all" style={{ width: `${pct}%` }} />
                           </div>
                           <span className="w-12 text-slateText-muted">{pct}% ({count})</span>
@@ -310,7 +310,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
               {/* Reviews List */}
               <div className="space-y-4">
                 {reviews.length === 0 ? (
-                  <div className="bg-white border border-grayBorder rounded-lg p-8 text-center text-slateText-muted shadow-sm">
+                  <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 text-center text-slateText-muted shadow-sm">
                     <MessageSquare className="w-8 h-8 text-slateText-muted mx-auto mb-2" />
                     <h4 className="font-bold text-slateText-primary text-xs">No reviews submitted yet</h4>
                     <p className="text-[10px] text-slateText-muted mt-1">
@@ -330,13 +330,13 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                     });
                     
                     return (
-                      <div key={rev.id} className="bg-white border border-grayBorder rounded-lg p-5 shadow-sm space-y-4">
+                      <div key={rev.id} className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 shadow-sm space-y-4">
                         {/* Title & rating */}
                         <div className="flex justify-between items-start gap-4">
                           <div>
                             <span className="text-xs text-slateText-muted font-extrabold uppercase tracking-wider flex items-center gap-1.5">
                               <span>{rev.roleTitle}</span>
-                              <span className="text-[10px] font-semibold text-slateText-secondary lowercase bg-grayBg px-2 py-0.5 rounded">
+                              <span className="text-[10px] font-semibold text-slateText-secondary lowercase bg-grayBg/60 px-2 py-0.5 rounded">
                                 {rev.isCurrentEmployee ? 'current employee' : 'former employee'}
                               </span>
                             </span>
@@ -380,7 +380,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
 
           {/* 3. SALARIES TAB */}
           {activeTab === 'salaries' && (
-            <div className="bg-white border border-grayBorder rounded-lg p-6 shadow-sm space-y-6">
+            <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-6 shadow-sm space-y-6">
               <div>
                 <h2 className="text-sm font-extrabold text-slateText-primary flex items-center gap-1.5">
                   <DollarSign className="w-4.5 h-4.5 text-accent-green" />
@@ -390,7 +390,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
               </div>
 
               {salaryStatsByCategory.length === 0 ? (
-                <div className="text-center py-12 bg-grayBg/20 border border-dashed border-grayBorder rounded-lg text-slateText-muted">
+                <div className="text-center py-12 bg-grayBg/20 border border-dashed border-grayBorder/40 rounded-lg text-slateText-muted">
                   <DollarSign className="w-8 h-8 text-slateText-muted mx-auto mb-2" />
                   <h4 className="font-bold text-slateText-primary text-xs">No salary statistics compiled</h4>
                   <p className="text-[10px] text-slateText-muted mt-1 max-w-sm mx-auto">
@@ -405,7 +405,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                     const max = stat.avgMax.toLocaleString(undefined, { maximumFractionDigits: 0 });
                     
                     return (
-                      <div key={stat.category} className="space-y-2 border-b border-grayBorder/50 pb-5 last:border-0 last:pb-0">
+                      <div key={stat.category} className="space-y-2 border-b border-grayBorder/40 pb-5 last:border-0 last:pb-0">
                         <div className="flex justify-between items-center text-xs font-bold text-slateText-primary">
                           <span>{stat.category} Roles</span>
                           <span className="text-accent-green font-extrabold text-sm">${avg}/yr</span>
@@ -414,7 +414,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                         
                         {/* Range slider indicator */}
                         <div className="space-y-1.5 pt-1">
-                          <div className="relative bg-grayBg h-2.5 rounded border border-grayBorder/30 overflow-hidden flex justify-between items-center">
+                           <div className="relative bg-grayBg/60 h-2.5 rounded border border-grayBorder/40 overflow-hidden flex justify-between items-center">
                             <div className="bg-accent-green/10 h-full absolute w-[60%] left-[20%]" />
                             <div className="bg-accent-green h-full w-2 absolute left-[50%] -ml-1 rounded" title="Average Midpoint" />
                           </div>
@@ -446,7 +446,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                   ))}
                 </div>
               ) : (
-                <div className="bg-white border border-grayBorder rounded-lg p-8 text-center text-slateText-muted shadow-sm">
+                <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 text-center text-slateText-muted shadow-sm">
                   <Briefcase className="w-8 h-8 text-slateText-muted mx-auto mb-2" />
                   <h4 className="font-bold text-slateText-primary text-xs">No active vacancies</h4>
                   <p className="text-[10px] text-slateText-muted mt-1">
@@ -460,8 +460,8 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
 
         {/* Sidebar Info Panel */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-white border border-grayBorder rounded-lg p-5 shadow-sm space-y-4">
-            <h2 className="text-xs font-bold text-slateText-primary uppercase tracking-wider border-b border-grayBorder pb-2 mb-3">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 shadow-sm space-y-4">
+            <h2 className="text-xs font-bold text-slateText-primary uppercase tracking-wider border-b border-grayBorder/40 pb-2 mb-3">
               Company Meta
             </h2>
             
@@ -492,7 +492,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
       {/* WRITE A REVIEW MODAL */}
       {showReviewModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slateText-primary/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white border border-grayBorder rounded-lg shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 relative">
+          <div className="bg-grayBg/90 border border-grayBorder/40 rounded-lg shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 relative">
             
             {/* Close Button */}
             <button
@@ -517,7 +517,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
               <form onSubmit={handleReviewSubmit} className="space-y-4">
                 
                 {errorMsg && (
-                  <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded text-xs font-semibold flex items-center gap-2">
+                  <div className="bg-red-950/20 border border-red-500/20 text-red-400 p-3 rounded text-xs font-semibold flex items-center gap-2">
                     <AlertCircle className="w-4 h-4 flex-shrink-0" />
                     <span>{errorMsg}</span>
                   </div>
@@ -531,7 +531,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                     value={form.roleTitle}
                     onChange={(e) => setReviewForm({ ...form, roleTitle: e.target.value })}
                     placeholder="e.g. Software Engineer, Product Designer"
-                    className="bg-grayBg border border-grayBorder rounded px-3 py-2 text-xs font-semibold outline-none focus:border-accent-green text-slateText-primary"
+                    className="bg-grayBg/60 border border-grayBorder/40 rounded px-3 py-2 text-xs font-semibold outline-none focus:border-accent-green text-slateText-primary"
                   />
                 </div>
 
@@ -550,7 +550,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                           className={`w-6 h-6 ${
                             star <= form.rating 
                               ? 'fill-amber-500 text-amber-500' 
-                              : 'text-grayBorder'
+                              : 'text-slateText-muted/40'
                           }`} 
                         />
                       </button>
@@ -582,7 +582,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                     value={form.pros}
                     onChange={(e) => setReviewForm({ ...form, pros: e.target.value })}
                     placeholder="What do you love about working here? Great culture, tools, mentorship?"
-                    className="bg-grayBg border border-grayBorder rounded p-3 text-xs outline-none focus:border-accent-green text-slateText-primary font-sans"
+                    className="bg-grayBg/60 border border-grayBorder/40 rounded p-3 text-xs outline-none focus:border-accent-green text-slateText-primary font-sans"
                   />
                 </div>
 
@@ -594,7 +594,7 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                     value={form.cons}
                     onChange={(e) => setReviewForm({ ...form, cons: e.target.value })}
                     placeholder="What are the drawbacks? Bureaucracy, timezones, lack of upward mobility?"
-                    className="bg-grayBg border border-grayBorder rounded p-3 text-xs outline-none focus:border-accent-green text-slateText-primary font-sans"
+                    className="bg-grayBg/60 border border-grayBorder/40 rounded p-3 text-xs outline-none focus:border-accent-green text-slateText-primary font-sans"
                   />
                 </div>
 
@@ -606,16 +606,16 @@ export default function CompanyClientDashboard({ company, initialReviews, jobs, 
                     value={form.adviceToManagement}
                     onChange={(e) => setReviewForm({ ...form, adviceToManagement: e.target.value })}
                     placeholder="Any suggestions or requests for leaders at the company?"
-                    className="bg-grayBg border border-grayBorder rounded p-3 text-xs outline-none focus:border-accent-green text-slateText-primary font-sans"
+                    className="bg-grayBg/60 border border-grayBorder/40 rounded p-3 text-xs outline-none focus:border-accent-green text-slateText-primary font-sans"
                   />
                 </div>
 
                 {/* Footer buttons */}
-                <div className="flex gap-3 pt-3 border-t border-grayBorder/60">
+                <div className="flex gap-3 pt-3 border-t border-grayBorder/40">
                   <button
                     type="button"
                     onClick={() => setShowReviewModal(false)}
-                    className="px-4 py-2.5 border border-grayBorder text-slateText-secondary font-bold rounded hover:bg-grayBg text-xs transition-colors"
+                    className="px-4 py-2.5 border border-grayBorder/40 text-slateText-secondary font-bold rounded hover:bg-grayBg/80 text-xs transition-colors"
                   >
                     Cancel
                   </button>

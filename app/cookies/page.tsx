@@ -9,9 +9,9 @@ export const metadata = {
 export default function CookiesPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <div className="bg-white border border-grayBorder rounded-lg p-8 shadow-sm">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-8 shadow-sm">
         
-        <div className="flex items-center gap-3 border-b border-grayBorder pb-4 mb-6">
+        <div className="flex items-center gap-3 border-b border-grayBorder/40 pb-4 mb-6">
           <ShieldAlert className="w-8 h-8 text-accent-green" />
           <h1 className="text-xl md:text-2xl font-extrabold text-slateText-primary">Cookie Policy</h1>
         </div>
@@ -57,7 +57,7 @@ export default function CookiesPage() {
             </p>
           </div>
 
-          <div className="pt-4 border-t border-grayBorder text-xs text-slateText-muted">
+          <div className="pt-4 border-t border-grayBorder/40 text-xs text-slateText-muted">
             If you need further details, please review our <Link href="/privacy" className="text-accent-green hover:underline">Privacy Policy</Link> or get in touch through the <Link href="/contact" className="text-accent-green hover:underline">Contact Page</Link>.
           </div>
         </div>

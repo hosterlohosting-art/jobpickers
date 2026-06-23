@@ -169,7 +169,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostPageProps) 
 
         {/* ── MAIN ARTICLE COLUMN ── */}
         <article className="lg:col-span-2 space-y-6">
-          <div className="bg-white border border-grayBorder rounded-lg overflow-hidden shadow-sm">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg overflow-hidden shadow-sm">
 
             {/* Featured Image */}
             {post.featuredImage && (
@@ -195,7 +195,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostPageProps) 
               </p>
 
               {/* Meta row */}
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-slateText-muted border-b border-grayBorder pb-5 mb-6">
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-slateText-muted border-b border-grayBorder/40 pb-5 mb-6">
                 <span className="flex items-center gap-1.5">
                   <User className="w-3.5 h-3.5 text-accent-green" />
                   {post.author.name}
@@ -212,7 +212,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostPageProps) 
 
               {/* Table of Contents */}
               {tocHeadings.length > 2 && (
-                <nav className="bg-grayBg border border-grayBorder rounded-lg p-5 mb-8">
+                <nav className="bg-grayBg/60 border border-grayBorder/40 rounded-lg p-5 mb-8">
                   <h2 className="text-xs font-extrabold text-slateText-primary uppercase tracking-wider mb-3 flex items-center gap-1.5">
                     <BookOpen className="w-4 h-4 text-accent-green" />
                     Table of Contents
@@ -239,7 +239,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostPageProps) 
               {/* Article body */}
               <div
                 className="prose prose-sm max-w-none text-slateText-secondary leading-relaxed
-                  prose-h2:text-slateText-primary prose-h2:font-extrabold prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3 prose-h2:pt-2 prose-h2:border-t prose-h2:border-grayBorder/60
+                  prose-h2:text-slateText-primary prose-h2:font-extrabold prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3 prose-h2:pt-2 prose-h2:border-t prose-h2:border-grayBorder/40
                   prose-h3:text-slateText-primary prose-h3:font-bold prose-h3:text-base prose-h3:mt-5 prose-h3:mb-2
                   prose-p:mb-4 prose-ul:mb-4 prose-ol:mb-4
                   prose-a:text-accent-green prose-a:font-semibold prose-a:no-underline hover:prose-a:underline
@@ -251,7 +251,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostPageProps) 
               />
 
               {/* Social share buttons */}
-              <div className="border-t border-grayBorder mt-10 pt-6">
+              <div className="border-t border-grayBorder/40 mt-10 pt-6">
                 <p className="text-xs font-extrabold text-slateText-primary uppercase tracking-wider mb-3 flex items-center gap-1.5">
                   <Share2 className="w-4 h-4 text-accent-green" />
                   Share this article
@@ -290,7 +290,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostPageProps) 
           </div>
 
           {/* Author bio box */}
-          <div className="bg-white border border-grayBorder rounded-lg p-5 flex items-start gap-4 shadow-sm">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 flex items-start gap-4 shadow-sm">
             <div className="w-14 h-14 rounded-full bg-accent-green/10 flex items-center justify-center text-accent-green font-extrabold text-xl flex-shrink-0">
               {post.author.name.charAt(0)}
             </div>
@@ -313,14 +313,14 @@ export default async function BlogPostDetailPage({ params }: BlogPostPageProps) 
           </Link>
 
           {/* Related articles */}
-          <div className="bg-white border border-grayBorder rounded-lg p-5 shadow-sm">
-            <h2 className="text-xs font-extrabold text-slateText-primary uppercase tracking-wider border-b border-grayBorder pb-3 mb-4 flex items-center gap-1.5">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 shadow-sm">
+            <h2 className="text-xs font-extrabold text-slateText-primary uppercase tracking-wider border-b border-grayBorder/40 pb-3 mb-4 flex items-center gap-1.5">
               <BookOpen className="w-4 h-4 text-accent-green" />
               More Career Guides
             </h2>
             <div className="space-y-4">
               {relatedPosts.map((relPost) => (
-                <div key={relPost.id} className="group border-b border-grayBorder/60 pb-4 last:border-0 last:pb-0">
+                <div key={relPost.id} className="group border-b border-grayBorder/40 pb-4 last:border-0 last:pb-0">
                   <Link href={`/blog/${relPost.slug}`}>
                     <h3 className="text-xs font-bold text-slateText-primary group-hover:text-accent-green leading-snug transition-colors line-clamp-2">
                       {relPost.title}
@@ -347,8 +347,8 @@ export default async function BlogPostDetailPage({ params }: BlogPostPageProps) 
           </div>
 
           {/* Categories */}
-          <div className="bg-white border border-grayBorder rounded-lg p-5 shadow-sm">
-            <h2 className="text-xs font-extrabold text-slateText-primary uppercase tracking-wider border-b border-grayBorder pb-2 mb-3">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 shadow-sm">
+            <h2 className="text-xs font-extrabold text-slateText-primary uppercase tracking-wider border-b border-grayBorder/40 pb-2 mb-3">
               Browse by Topic
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -356,7 +356,7 @@ export default async function BlogPostDetailPage({ params }: BlogPostPageProps) 
                 <Link
                   key={tag}
                   href="/blog"
-                  className="bg-grayBg border border-grayBorder text-slateText-secondary hover:border-accent-green/50 hover:text-accent-green text-[10px] font-bold px-2.5 py-1 rounded transition-colors"
+                  className="bg-grayBg/60 border border-grayBorder/40 text-slateText-secondary hover:border-accent-green/50 hover:text-accent-green text-[10px] font-bold px-2.5 py-1 rounded transition-colors"
                 >
                   {tag}
                 </Link>

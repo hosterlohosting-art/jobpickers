@@ -66,7 +66,7 @@ export default async function CompanyDirectoryPage({ searchParams }: { searchPar
     <div className="max-w-6xl mx-auto px-4 py-8">
       
       {/* Page Title & Intro */}
-      <div className="bg-white border border-grayBorder rounded-lg p-6 mb-8 shadow-sm flex items-center justify-between flex-wrap gap-4">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-6 mb-8 shadow-sm flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-xl font-extrabold text-slateText-primary flex items-center gap-2">
             <Building2 className="w-6 h-6 text-accent-green" />
@@ -77,7 +77,7 @@ export default async function CompanyDirectoryPage({ searchParams }: { searchPar
       </div>
 
       {/* Search & Filter Form (Server-rendered GET form) */}
-      <form method="GET" action="/companies" className="bg-white border border-grayBorder rounded-lg p-5 shadow-sm grid grid-cols-1 md:grid-cols-4 gap-4 items-end mb-8">
+      <form method="GET" action="/companies" className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 shadow-sm grid grid-cols-1 md:grid-cols-4 gap-4 items-end mb-8">
         
         {/* Keyword Search */}
         <div className="flex flex-col gap-1.5 md:col-span-2">
@@ -88,7 +88,7 @@ export default async function CompanyDirectoryPage({ searchParams }: { searchPar
               name="search"
               defaultValue={search || ''}
               placeholder="e.g. Stripe, Google, Vercel..."
-              className="w-full bg-grayBg border border-grayBorder rounded pl-8 pr-3 py-2 text-xs font-semibold outline-none focus:border-accent-green text-slateText-primary"
+              className="w-full bg-grayBg/60 border border-grayBorder/40 rounded pl-8 pr-3 py-2 text-xs font-semibold outline-none focus:border-accent-green text-slateText-primary"
             />
             <Search className="w-3.5 h-3.5 text-slateText-muted absolute left-2.5 top-2.5" />
           </div>
@@ -100,7 +100,7 @@ export default async function CompanyDirectoryPage({ searchParams }: { searchPar
           <select
             name="industry"
             defaultValue={industry || 'all'}
-            className="bg-grayBg border border-grayBorder rounded px-3 py-2 text-xs font-semibold outline-none focus:border-accent-green text-slateText-secondary"
+            className="bg-grayBg/60 border border-grayBorder/40 rounded px-3 py-2 text-xs font-semibold outline-none focus:border-accent-green text-slateText-secondary"
           >
             <option value="all">All Industries</option>
             {uniqueIndustries.map(ind => (
@@ -120,7 +120,7 @@ export default async function CompanyDirectoryPage({ searchParams }: { searchPar
 
       {/* Directory Grid Listing */}
       {companies.length === 0 ? (
-        <div className="text-center py-16 bg-white border border-grayBorder rounded-lg shadow-sm">
+        <div className="text-center py-16 bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg shadow-sm">
           <Building2 className="w-10 h-10 text-slateText-muted mx-auto mb-3" />
           <h3 className="text-sm font-extrabold text-slateText-primary">No companies matched your search</h3>
           <p className="text-xs text-slateText-muted mt-1 max-w-xs mx-auto">
@@ -142,7 +142,7 @@ export default async function CompanyDirectoryPage({ searchParams }: { searchPar
             return (
               <div 
                 key={company.id} 
-                className="bg-white border border-grayBorder hover:border-accent-green/40 rounded-lg p-5 shadow-sm hover:shadow transition-all flex flex-col justify-between"
+                className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 hover:border-accent-green/45 rounded-lg p-5 shadow-sm hover:shadow-lg hover:shadow-accent-green/5 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   {/* Card Head */}
@@ -179,12 +179,12 @@ export default async function CompanyDirectoryPage({ searchParams }: { searchPar
                 <div className="mt-5 pt-4 border-t border-grayBorder/60 space-y-3">
                   <div className="flex flex-wrap gap-2 text-[10px] font-semibold text-slateText-secondary">
                     {company.industry && (
-                      <span className="bg-grayBg px-2 py-0.5 rounded border border-grayBorder/30 max-w-[150px] truncate" title={company.industry}>
+                      <span className="bg-grayBg/60 px-2 py-0.5 rounded border border-grayBorder/40 max-w-[150px] truncate" title={company.industry}>
                         {company.industry}
                       </span>
                     )}
                     {company.size && (
-                      <span className="bg-grayBg px-2 py-0.5 rounded border border-grayBorder/30">
+                      <span className="bg-grayBg/60 px-2 py-0.5 rounded border border-grayBorder/40">
                         <Users className="w-2.5 h-2.5 inline mr-1 -mt-0.5 text-slateText-muted" />
                         {company.size}
                       </span>

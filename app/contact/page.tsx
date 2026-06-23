@@ -23,9 +23,9 @@ export default function ContactPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <div className="bg-white border border-grayBorder rounded-lg p-6 md:p-8 shadow-sm">
+      <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-6 md:p-8 shadow-sm">
         
-        <div className="flex items-center gap-3 border-b border-grayBorder pb-4 mb-6">
+        <div className="flex items-center gap-3 border-b border-grayBorder/40 pb-4 mb-6">
           <Mail className="w-8 h-8 text-accent-green" />
           <h1 className="text-xl md:text-2xl font-extrabold text-slateText-primary">Contact JobPickers</h1>
         </div>
@@ -55,7 +55,7 @@ export default function ContactPage() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g. John Doe"
-                      className="bg-grayBg border border-grayBorder rounded px-3 py-2 text-sm font-semibold outline-none focus:border-accent-green"
+                      className="bg-grayBg/60 border border-grayBorder/40 rounded px-3 py-2 text-sm font-semibold outline-none focus:border-accent-green text-slateText-primary"
                     />
                   </div>
                   <div className="flex flex-col gap-1">
@@ -66,7 +66,7 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="e.g. john@domain.com"
-                      className="bg-grayBg border border-grayBorder rounded px-3 py-2 text-sm font-semibold outline-none focus:border-accent-green"
+                      className="bg-grayBg/60 border border-grayBorder/40 rounded px-3 py-2 text-sm font-semibold outline-none focus:border-accent-green text-slateText-primary"
                     />
                   </div>
                 </div>
@@ -78,7 +78,7 @@ export default function ContactPage() {
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                     placeholder="e.g. Advertising Inquiries"
-                    className="bg-grayBg border border-grayBorder rounded px-3 py-2 text-sm font-semibold outline-none focus:border-accent-green"
+                    className="bg-grayBg/60 border border-grayBorder/40 rounded px-3 py-2 text-sm font-semibold outline-none focus:border-accent-green text-slateText-primary"
                   />
                 </div>
 
@@ -90,7 +90,7 @@ export default function ContactPage() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Detail your question or business proposition..."
-                    className="bg-grayBg border border-grayBorder rounded px-3 py-2 text-sm font-semibold outline-none focus:border-accent-green"
+                    className="bg-grayBg/60 border border-grayBorder/40 rounded px-3 py-2 text-sm font-semibold outline-none focus:border-accent-green text-slateText-primary"
                   />
                 </div>
 
@@ -106,7 +106,7 @@ export default function ContactPage() {
           </div>
 
           {/* Quick info metadata */}
-          <div className="md:col-span-1 space-y-6 pt-4 border-t md:border-t-0 md:border-l border-grayBorder md:pl-8">
+          <div className="md:col-span-1 space-y-6 pt-4 border-t md:border-t-0 md:border-l border-grayBorder/40 md:pl-8">
             <h2 className="text-xs font-bold text-slateText-primary uppercase tracking-wider">
               Contact Details
             </h2>

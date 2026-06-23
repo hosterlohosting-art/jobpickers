@@ -157,7 +157,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
         
         {/* Main Job Body details Column */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white border border-grayBorder rounded-lg p-6 md:p-8 shadow-sm">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-6 md:p-8 shadow-sm">
             {job.status === 'expired' && (
               <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-md mb-6 text-xs font-semibold flex items-center gap-2">
                 <AlertCircle className="w-5 h-5 flex-shrink-0" />
@@ -183,7 +183,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
             </div>
 
             {/* Quick Metadata grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-y border-grayBorder/80 my-6 py-4 text-xs font-bold text-slateText-secondary uppercase tracking-wider">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-y border-grayBorder/40 my-6 py-4 text-xs font-bold text-slateText-secondary uppercase tracking-wider">
               <div className="flex flex-col gap-1">
                 <span className="text-[10px] text-slateText-muted">Workplace</span>
                 <span className="text-slateText-primary">{job.remoteType}</span>
@@ -213,7 +213,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
               {job.status === 'expired' ? (
                 <button
                   disabled
-                  className="bg-slateText-muted/20 text-slateText-muted cursor-not-allowed text-xs font-bold px-6 py-3 rounded bg-grayBg border border-grayBorder"
+                  className="bg-slateText-muted/20 text-slateText-muted cursor-not-allowed text-xs font-bold px-6 py-3 rounded bg-grayBg/60 border border-grayBorder/40"
                 >
                   Position Expired
                 </button>
@@ -239,8 +239,8 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
           <AdSenseContainer placementName="job_details_summary" adCode={adDetailsCode} />
 
           {/* Main Description details */}
-          <div className="bg-white border border-grayBorder rounded-lg p-6 md:p-8 shadow-sm">
-            <h2 className="text-lg font-extrabold text-slateText-primary border-b border-grayBorder pb-3 mb-4">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-6 md:p-8 shadow-sm">
+            <h2 className="text-lg font-extrabold text-slateText-primary border-b border-grayBorder/40 pb-3 mb-4">
               Job Description
             </h2>
             <article 
@@ -248,11 +248,11 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
               dangerouslySetInnerHTML={{ __html: job.description }}
             />
             {job.skills && job.skills !== 'Not Specified' && (
-              <div className="mt-8 pt-6 border-t border-grayBorder">
+              <div className="mt-8 pt-6 border-t border-grayBorder/40">
                 <h3 className="text-sm font-bold text-slateText-primary uppercase tracking-wide mb-2">Required Skills</h3>
                 <div className="flex flex-wrap gap-2">
                   {job.skills.split(',').map((skill: string) => (
-                    <span key={skill} className="bg-grayBg border border-grayBorder text-slateText-secondary text-xs font-semibold px-2.5 py-1 rounded">
+                    <span key={skill} className="bg-grayBg/60 border border-grayBorder/40 text-slateText-secondary text-xs font-semibold px-2.5 py-1 rounded">
                       {skill.trim()}
                     </span>
                   ))}
@@ -261,7 +261,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
             )}
 
             {/* Apply section at the bottom of the description */}
-            <div id="apply-section" className="mt-8 pt-6 border-t border-grayBorder flex flex-col sm:flex-row gap-4 items-center justify-between">
+            <div id="apply-section" className="mt-8 pt-6 border-t border-grayBorder/40 flex flex-col sm:flex-row gap-4 items-center justify-between">
               <div>
                 <h4 className="text-sm font-bold text-slateText-primary">Ready to apply?</h4>
                 <p className="text-xs text-slateText-muted">You will be redirected to the official company application portal.</p>
@@ -270,7 +270,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
                 {job.status === 'expired' ? (
                   <button
                     disabled
-                    className="w-full sm:w-auto text-center bg-slateText-muted/20 text-slateText-muted cursor-not-allowed text-xs font-bold px-6 py-3 rounded bg-grayBg border border-grayBorder"
+                    className="w-full sm:w-auto text-center bg-slateText-muted/20 text-slateText-muted cursor-not-allowed text-xs font-bold px-6 py-3 rounded bg-grayBg/60 border border-grayBorder/40"
                   >
                     Position Expired
                   </button>
@@ -309,8 +309,8 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
 
         {/* Sidebar Company Profile details */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-white border border-grayBorder rounded-lg p-5 shadow-sm">
-            <h2 className="text-sm font-bold text-slateText-primary uppercase tracking-wider border-b border-grayBorder pb-2 mb-4">
+          <div className="bg-grayBg/50 backdrop-blur-sm border border-grayBorder/40 rounded-lg p-5 shadow-sm">
+            <h2 className="text-sm font-bold text-slateText-primary uppercase tracking-wider border-b border-grayBorder/40 pb-2 mb-4">
               Hiring Company
             </h2>
             <div className="flex items-center gap-3">
@@ -323,7 +323,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
               </div>
             </div>
 
-            <div className="mt-4 space-y-3 text-xs font-semibold text-slateText-secondary pt-4 border-t border-grayBorder/60">
+            <div className="mt-4 space-y-3 text-xs font-semibold text-slateText-secondary pt-4 border-t border-grayBorder/40">
               <div className="flex items-center gap-2">
                 <Building2 className="w-4 h-4 text-slateText-muted" />
                 <span>Industry: {job.company.industry || 'Not specified'}</span>
